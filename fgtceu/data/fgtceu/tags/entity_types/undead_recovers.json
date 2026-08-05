@@ -1,0 +1,17 @@
+{
+    "values": [
+        "zombie",
+        "zombie_horse",
+        "zombie_villager",
+        "zombified_piglin",
+        "zoglin",
+        "drowned",
+        "husk",
+        "phantom",
+        "wither",
+        "#skeletons",
+        "grimoireofgaia:horse",
+        "grimoireofgaia:mummy",
+        "twilightforest:loyal_zombie"
+    ]
+}

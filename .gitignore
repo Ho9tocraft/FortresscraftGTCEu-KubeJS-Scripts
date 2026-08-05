@@ -1,0 +1,16 @@
+.*/
+
+## SAMPLES
+guides_and_memo/
+quests/
+ケーシングブロック選定/
+安いおまけ/
+
+## RESOURCES
+*.mcmeta
+*.png
+*.obj
+*.zip
+
+## must save
+!pack.mcmeta
