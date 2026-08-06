@@ -14,6 +14,7 @@ GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
         HighPowerPyrolyseOven,
         HighPressureSteamTurbine,
         LargeHeatExchanger,
+        FGTCEuGreenhouse: GHouse,
     } = global.FGTCEuAddedRecipeType;
     /* ---- EN Consumed / ZERO EN Run ---- */
     // Large Heat Exchanger
@@ -237,5 +238,175 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
         Component.translatable(outTranslatableString('gtceu', 'shutup_gt5u'))
     ]);
     /* Extended Large Turbine Generator Series | 拡張型タービン発電機 */
-    // TODO: 実装
+    // マフラーハッチなし
+    {
+        /* Extended Large Steam Turbine Generator | 拡張型蒸気タービン */
+        event.create('extended_steam_large_turbine', 'multiblock')
+            .machine((holder) => new LargeTurbineMachine(holder, GTValues.LuV))
+            .rotationState(RotationState.ALL)
+            .recipeTypes('steam_turbine')
+            .recipeModifiers([(machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe)])
+            .generator(true)
+            .appearanceBlock(GTBlocks.CASING_STEEL_TURBINE)
+            .pattern(definition => FactoryBlockPattern.start()
+                .aisle('FFFFFFCCCCC', 'F   F CVVVC', 'F   F CHHHC', 'F   F CVVVC', 'FFFFFFCCCCC')
+                .aisle('F   F CVVVC', 'CCCCCCCUUUZ', 'CHHHCTCPPPV', 'CCCCCCCUUUZ', 'F   F CVVVC')
+                .aisle('F   F CHHHC', 'CHHHCZCPPPV', 'RGGGPPPPWWO', 'CHHHCZCPPPV', 'F   F CHHHC')
+                .aisle('F   F CVVVC', 'CCCCCCCUUUZ', 'CH@HCTCPPPV', 'CCCCCCCUUUZ', 'F   F CVVVC')
+                .aisle('FFFFFFCCCCC', 'F   F CVVVC', 'F   F CHHHC', 'F   F CVVVC', 'FFFFFFCCCCC')
+                .where('@', Predicates.controller(Predicates.blocks(definition.get())))
+                .where('C', Predicates.blocks(GTBlocks.CASING_STEEL_TURBINE.get()))
+                .where('F', Predicates.frames(GTMaterials.get('high_mithrite')))
+                .where('G', Predicates.blocks(GTBlocks.CASING_STEEL_GEARBOX.get()))
+                .where('H', Predicates.blocks(GTBlocks.CASING_STEEL_TURBINE.get())
+                    .or(Predicates.abilities(PartAbility.IMPORT_FLUIDS, PartAbility.EXPORT_FLUIDS))
+                    .or(Predicates.abilities(PartAbility.MAINTENANCE).setExactLimit(1)))
+                .where('O', Predicates.abilities(PartAbility.OUTPUT_ENERGY,
+                    PartAbility.OUTPUT_LASER, PartAbility.SUBSTATION_OUTPUT_ENERGY).setExactLimit(1))
+                .where('P', Predicates.blocks(GTBlocks.CASING_TUNGSTENSTEEL_PIPE.get()))
+                .where('R', Predicates.abilities(PartAbility.ROTOR_HOLDER).setExactLimit(1))
+                .where('T', Predicates.blocks(GTBlocks.CASING_TEMPERED_GLASS))
+                .where('U', Predicates.blocks(GTBlocks.COMPUTER_HEAT_VENT))
+                .where('V', Predicates.blocks(GCYMBlocks.HEAT_VENT))
+                .where('W', Predicates.blocks(GTBlocks.SUPERCONDUCTING_COIL))
+                .where('Z', Predicates.blocks(GTBlocks.CASING_EXTREME_ENGINE_INTAKE))
+                .where(' ', Predicates.any())
+            .build())
+            .workableCasingModel(GTCEu.id('block/casings/mechanic/machine_casing_turbine_steel'),
+                GTCEu.id('block/multiblock/generator/large_steam_turbine'))
+            ['tooltips(net.minecraft.network.chat.Component[])']([
+                Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.LuV] * 2),
+                Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.LuV]),
+                Component.translatable(outTranslatableString('gtceu', `machine.extended_steam_large_turbine`)),
+                Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
+                Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
+            ]);
+        /* Extended Large High Pressure Steam Turbine Generator | 拡張型高圧蒸気タービン */
+        event.create('extended_hp_steam_large_turbine', 'multiblock')
+            .machine((holder) => new LargeTurbineMachine(holder, GTValues.LuV))
+            .rotationState(RotationState.ALL)
+            .recipeTypes('hp_steam_turbine')
+            .recipeModifiers([(machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe)])
+            .generator(true)
+            .appearanceBlock(GTBlocks.CASING_TITANIUM_TURBINE)
+            .pattern(definition => FactoryBlockPattern.start()
+                .aisle('FFFFFFCCCCC', 'F   F CVVVC', 'F   F CHHHC', 'F   F CVVVC', 'FFFFFFCCCCC')
+                .aisle('F   F CVVVC', 'CCCCCCCUUUZ', 'CHHHCTCPPPV', 'CCCCCCCUUUZ', 'F   F CVVVC')
+                .aisle('F   F CHHHC', 'CHHHCZCPPPV', 'RGGGPPPPWWO', 'CHHHCZCPPPV', 'F   F CHHHC')
+                .aisle('F   F CVVVC', 'CCCCCCCUUUZ', 'CH@HCTCPPPV', 'CCCCCCCUUUZ', 'F   F CVVVC')
+                .aisle('FFFFFFCCCCC', 'F   F CVVVC', 'F   F CHHHC', 'F   F CVVVC', 'FFFFFFCCCCC')
+                .where('@', Predicates.controller(Predicates.blocks(definition.get())))
+                .where('C', Predicates.blocks(GTBlocks.CASING_TITANIUM_TURBINE.get()))
+                .where('F', Predicates.frames(GTMaterials.get('high_mithrite')))
+                .where('G', Predicates.blocks(GTBlocks.CASING_TITANIUM_GEARBOX.get()))
+                .where('H', Predicates.blocks(GTBlocks.CASING_TITANIUM_TURBINE.get())
+                    .or(Predicates.abilities(PartAbility.IMPORT_FLUIDS, PartAbility.EXPORT_FLUIDS))
+                    .or(Predicates.abilities(PartAbility.MAINTENANCE).setExactLimit(1)))
+                .where('O', Predicates.abilities(PartAbility.OUTPUT_ENERGY,
+                    PartAbility.OUTPUT_LASER, PartAbility.SUBSTATION_OUTPUT_ENERGY).setExactLimit(1))
+                .where('P', Predicates.blocks(GTBlocks.CASING_TUNGSTENSTEEL_PIPE.get()))
+                .where('R', Predicates.abilities(PartAbility.ROTOR_HOLDER).setExactLimit(1))
+                .where('T', Predicates.blocks(GTBlocks.CASING_TEMPERED_GLASS.get()))
+                .where('U', Predicates.blocks(GTBlocks.COMPUTER_HEAT_VENT.get()))
+                .where('V', Predicates.blocks(GCYMBlocks.HEAT_VENT.get()))
+                .where('W', Predicates.blocks(GTBlocks.SUPERCONDUCTING_COIL.get()))
+                .where('Z', Predicates.blocks(GTBlocks.CASING_EXTREME_ENGINE_INTAKE.get()))
+                .where(' ', Predicates.any())
+            .build())
+            .workableCasingModel(GTCEu.id('block/casings/mechanic/machine_casing_turbine_titanium'),
+                GTCEu.id('block/multiblock/generator/large_steam_turbine'))
+            ['tooltips(net.minecraft.network.chat.Component[])']([
+                Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.ZPM] * 2),
+                Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.ZPM]),
+                Component.translatable(outTranslatableString('gtceu', `machine.extended_steam_large_turbine`)),
+                Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
+                Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
+            ]);
+        /* Extended Large Plasma Turbine Generator | 拡張型プラズマタービン */
+        event.create('extended_plasma_large_turbine', 'multiblock')
+            .machine((holder) => new LargeTurbineMachine(holder, GTValues.LuV))
+            .rotationState(RotationState.ALL)
+            .recipeTypes('plasma_generator')
+            .recipeModifiers([(machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe)])
+            .generator(true)
+            .appearanceBlock(GTBlocks.CASING_TUNGSTENSTEEL_TURBINE)
+            .pattern(definition => FactoryBlockPattern.start()
+                .aisle('FFFFFFCCCCC', 'F   F CVVVC', 'F   F CHHHC', 'F   F CVVVC', 'FFFFFFCCCCC')
+                .aisle('F   F CVVVC', 'CCCCCCCUUUZ', 'CHHHCTCPPPV', 'CCCCCCCUUUZ', 'F   F CVVVC')
+                .aisle('F   F CHHHC', 'CHHHCZCPPPV', 'RGGGPPPPWWO', 'CHHHCZCPPPV', 'F   F CHHHC')
+                .aisle('F   F CVVVC', 'CCCCCCCUUUZ', 'CH@HCTCPPPV', 'CCCCCCCUUUZ', 'F   F CVVVC')
+                .aisle('FFFFFFCCCCC', 'F   F CVVVC', 'F   F CHHHC', 'F   F CVVVC', 'FFFFFFCCCCC')
+                .where('@', Predicates.controller(Predicates.blocks(definition.get())))
+                .where('C', Predicates.blocks(GTBlocks.CASING_TUNGSTENSTEEL_TURBINE.get()))
+                .where('F', Predicates.frames(GTMaterials.get('high_mithrite')))
+                .where('G', Predicates.blocks(GTBlocks.CASING_TUNGSTENSTEEL_GEARBOX.get()))
+                .where('H', Predicates.blocks(GTBlocks.CASING_TUNGSTENSTEEL_TURBINE.get())
+                    .or(Predicates.abilities(PartAbility.IMPORT_FLUIDS, PartAbility.EXPORT_FLUIDS))
+                    .or(Predicates.abilities(PartAbility.MAINTENANCE).setExactLimit(1)))
+                .where('O', Predicates.abilities(PartAbility.OUTPUT_ENERGY,
+                    PartAbility.OUTPUT_LASER, PartAbility.SUBSTATION_OUTPUT_ENERGY).setExactLimit(1))
+                .where('P', Predicates.blocks(GTBlocks.CASING_TUNGSTENSTEEL_PIPE.get()))
+                .where('R', Predicates.abilities(PartAbility.ROTOR_HOLDER).setExactLimit(1))
+                .where('T', Predicates.blocks(GTBlocks.CASING_TEMPERED_GLASS.get()))
+                .where('U', Predicates.blocks(GTBlocks.COMPUTER_HEAT_VENT.get()))
+                .where('V', Predicates.blocks(GCYMBlocks.HEAT_VENT.get()))
+                .where('W', Predicates.blocks(GTBlocks.SUPERCONDUCTING_COIL.get()))
+                .where('Z', Predicates.blocks(GTBlocks.CASING_EXTREME_ENGINE_INTAKE.get()))
+                .where(' ', Predicates.any())
+            .build())
+            .workableCasingModel(GTCEu.id('block/casings/mechanic/machine_casing_turbine_tungstensteel'),
+                GTCEu.id('block/multiblock/generator/large_plasma_turbine'))
+            ['tooltips(net.minecraft.network.chat.Component[])']([
+                Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.UV] * 2),
+                Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.UV]),
+                Component.translatable(outTranslatableString('gtceu', `machine.extended_plasma_large_turbine`)),
+                Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
+                Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
+            ]);
+    }
+    // マフラーハッチあり
+    {
+        /* Extended Large Gas Turbine Generator | 拡張型ガスタービン */
+        event.create('extended_gas_large_turbine', 'multiblock')
+            .machine((holder) => new LargeTurbineMachine(holder, GTValues.LuV))
+            .rotationState(RotationState.ALL)
+            .recipeTypes('gas_turbine')
+            .recipeModifiers([(machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe)])
+            .generator(true)
+            .appearanceBlock(GTBlocks.CASING_STAINLESS_TURBINE)
+            .pattern(definition => FactoryBlockPattern.start()
+                .aisle('FFFFFFCCCCC', 'F   F CVVVC', 'F   F CMMMC', 'F   F CVVVC', 'FFFFFFCCCCC')
+                .aisle('F   F CVVVC', 'CCCCCCCUUUZ', 'CMMMCTCPPPV', 'CCCCCCCUUUZ', 'F   F CVVVC')
+                .aisle('F   F CMMMC', 'CMMMCZCPPPV', 'RGGGPPPPWWO', 'CMMMCZCPPPV', 'F   F CMMMC')
+                .aisle('F   F CVVVC', 'CCCCCCCUUUZ', 'CM@MCTCPPPV', 'CCCCCCCUUUZ', 'F   F CVVVC')
+                .aisle('FFFFFFCCCCC', 'F   F CVVVC', 'F   F CMMMC', 'F   F CVVVC', 'FFFFFFCCCCC')
+                .where('@', Predicates.controller(Predicates.blocks(definition.get())))
+                .where('C', Predicates.blocks(GTBlocks.CASING_STAINLESS_TURBINE.get()))
+                .where('F', Predicates.frames(GTMaterials.get('high_mithrite')))
+                .where('G', Predicates.blocks(GTBlocks.CASING_STAINLESS_STEEL_GEARBOX.get()))
+                .where('M', Predicates.blocks(GTBlocks.CASING_STAINLESS_TURBINE.get())
+                    .or(Predicates.abilities(PartAbility.IMPORT_FLUIDS))
+                    .or(Predicates.abilities(PartAbility.MAINTENANCE).setExactLimit(1))
+                    .or(Predicates.abilities(PartAbility.MUFFLER).setExactLimit(1)))
+                .where('O', Predicates.abilities(PartAbility.OUTPUT_ENERGY,
+                    PartAbility.OUTPUT_LASER, PartAbility.SUBSTATION_OUTPUT_ENERGY).setExactLimit(1))
+                .where('P', Predicates.blocks(GTBlocks.CASING_TUNGSTENSTEEL_PIPE.get()))
+                .where('R', Predicates.abilities(PartAbility.ROTOR_HOLDER).setExactLimit(1))
+                .where('T', Predicates.blocks(GTBlocks.CASING_TEMPERED_GLASS.get()))
+                .where('U', Predicates.blocks(GTBlocks.COMPUTER_HEAT_VENT.get()))
+                .where('V', Predicates.blocks(GCYMBlocks.HEAT_VENT.get()))
+                .where('W', Predicates.blocks(GTBlocks.SUPERCONDUCTING_COIL.get()))
+                .where('Z', Predicates.blocks(GTBlocks.CASING_EXTREME_ENGINE_INTAKE.get()))
+                .where(' ', Predicates.any())
+            .build())
+            .workableCasingModel(GTCEu.id('block/casings/mechanic/machine_casing_turbine_stainless_steel'),
+                GTCEu.id('block/multiblock/generator/large_gas_steam_turbine'))
+            ['tooltips(net.minecraft.network.chat.Component[])']([
+                Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.ZPM] * 2),
+                Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.ZPM]),
+                Component.translatable(outTranslatableString('gtceu', `machine.extended_gas_large_turbine`)),
+                Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
+                Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
+            ]);
+    }
 });
