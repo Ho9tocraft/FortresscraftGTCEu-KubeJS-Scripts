@@ -1,6 +1,5 @@
-// priority: 10
-
-// Material Registry
+// requires: gtceu
+/* ---- Material Registry ---- */
 GTCEuStartupEvents.registry('gtceu:material', event => {
     // Superheated Steam (過熱蒸気)
     event.create('superheated_steam')

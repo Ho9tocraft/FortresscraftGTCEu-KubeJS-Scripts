@@ -1,3 +1,5 @@
+//requires: gtceu
+
 global.loadingStartupClasses = {
     $JavaBool: Java.loadClass('java.lang.Boolean'),
     GTCEu: {
@@ -41,17 +43,22 @@ global.FGTCEuCommonStartupFunctions = {
          * shutup_gt5uなど: backported_gt5u(い・や・だ・こ・と・わ・る！)
          * (multiblock.)parallelizableなど: parallel(パラレルハッチ使用可能)
          */
-        codeTxt = codeTxt
-            .replace(/(?:shutup|dammit|go_?home|goddamn)_?gt5u/i, 'backported_gt5u')
-            .replace(/(?:(?:multiblock|machine)\.)?parallel(?:izable)?/i, 'parallel');
+        const flagCode
+                    = /(?:shutup|dammit|go_?home|goddamn|backported)_?gt5u/i.test(codeTxt) ? 'backported'
+                    : /parallel(?:izable)?/i.test(codeTxt) ?                                 'parallel'
+                    : /base_?production_?eut/i.test(codeTxt) ?                               'baseProdEUt'
+                    : /turbine\.efficiency(?:_tooltip)?/i.test(codeTxt) ?                    'efficiencyTurbine'
+                    : codeTxt;
 
         const MatchSpecialCode = {
             gtceu: {
                 parallel: 'gtceu.multiblock.parallelizable.tooltip',
                 backported: 'gtceu.backported_gt5u.tooltip',
+                baseProdEUt: 'gtceu.universal.tooltip.base_production_eut',
+                efficiencyTurbine: 'gtceu.multiblock.turbine.efficiency_tooltip',
             },
         };
-        if (modid in MatchSpecialCode && codeTxt in MatchSpecialCode[modid]) return MatchSpecialCode[modid][codeTxt];
+        if (modid in MatchSpecialCode && flagCode in MatchSpecialCode[modid]) return MatchSpecialCode[modid][flagCode];
         return `${modid}.${codeTxt}.tooltip${typeof sectNum === 'undefined' ? '' : `.${sectNum}`}`;
     },
 };

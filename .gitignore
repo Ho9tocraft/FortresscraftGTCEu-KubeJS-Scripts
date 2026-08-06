@@ -1,4 +1,7 @@
 .*/
+## CONFIG
+client.properties
+common.properties
 
 ## SAMPLES
 guides_and_memo/

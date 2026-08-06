@@ -36,7 +36,7 @@ ServerEvents.recipes((event) => {
         },
         gas: {
             zurvanised_nitrobenzene: {
-                inFluid: 'gtceu:zurvanized_nitrobenzene 1',
+                inFluid: 'gtceu:zurvanised_nitrobenzene 1',
                 duration: 200,
                 outEUt: LV
             },
@@ -87,7 +87,8 @@ ServerEvents.recipes((event) => {
             .EUt(-outEUt);
     });
     // Plasma Turbine & Large Heat Exchanger (Plasma Section)
-    [...['helium','oxygen','nitrogen','argon','iron','tin','nickel','americium'], ...Object.keys(FuelConds.plasma)].forEach((fuel) => {
+    const defaultPlasmas = ['helium','oxygen','nitrogen','argon','iron','tin','nickel','americium'];
+    defaultPlasmas.concat(Object.keys(FuelConds.plasma)).forEach((fuel) => {
         if (!fuel) return; // 空文字スキップ
         const coolantHeatingValue = 400 * (
             fuel === 'helium' ?     40 :

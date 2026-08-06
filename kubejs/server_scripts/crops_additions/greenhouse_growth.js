@@ -5,6 +5,7 @@
 ServerEvents.recipes(event => {
     // Green House recipes
     const { green_house: GTFarm } = event.recipes.gtceu;
+    console.log(Object.keys(event.recipes.gtceu).find(item => /green_?house/i.test(item)));
 
     /**
      * 
@@ -68,6 +69,7 @@ ServerEvents.recipes(event => {
         Tier5: 2,
         Tier6: 1
     };
+    if (!(typeof GTFarm === 'function')) return;
 
     // Execute Mystical Agriculture Series Crops Recipe Appends
     Object.keys(MystAgriCrops).forEach(tier => {

@@ -6,13 +6,13 @@ const attireRunning = (player, stack) => {
 PlayerEvents.tick(event => {
     const { fullSetAttires, fgtceuHelpers } = global;
     const { abysslinker } = fullSetAttires;
-    const { inHeadPL, inChestPL, inLegsPL, inFeetPL, getAttireFullPL } = fgtceuHelpers.armorSetEvent;
+    const { inHeadPL, inChestPL, inLegsPL, inFeetPL, getAttirePL } = fgtceuHelpers.armorSetEvent;
     const tPlayer = event.player;
     if (!tPlayer || tPlayer.level.isClientSide()) return;
-    const inventorySlots = getAttireFullPL(tPlayer);
+    const inventorySlots = getAttirePL(tPlayer);
     if ((tPlayer.age % 20) != 0) return;
-    if (inventorySlots.head.id == abysslinker.head) attireRunning(tPlayer, inventorySlots.head);
-    if (inventorySlots.chest.id == abysslinker.chest) attireRunning(tPlayer, inventorySlots.chest);
-    if (inventorySlots.legs.id == abysslinker.legs) attireRunning(tPlayer, inventorySlots.legs);
-    if (inventorySlots.feat.id == abysslinker.feet) attireRunning(tPlayer, inventorySlots.feet);
+    if (inHeadPL(tPlayer, abysslinker)) attireRunning(tPlayer, inventorySlots.head);
+    if (inChestPL(tPlayer, abysslinker)) attireRunning(tPlayer, inventorySlots.chest);
+    if (inLegsPL(tPlayer, abysslinker)) attireRunning(tPlayer, inventorySlots.legs);
+    if (inFeetPL(tPlayer, abysslinker)) attireRunning(tPlayer, inventorySlots.feet);
 });

@@ -1,3 +1,4 @@
+//requires: gtceu
 /**
  * Add Some of the Machines for increase QoL
  */
@@ -71,92 +72,9 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
         outTranslatableString,
     } = FGTCEuCommonStartupFunctions;
 
-    /* ---- サブルーチン ---- */
-    /**
-     * 
-     * @param {string} id 
-     * @returns 
-     */
-    const defineExtendTurbineID = (id) => {
-        id = id.replace(/h(?:igh_?)?press(?:ure)?/i, 'hp');
-        return `extended_${id}_large_turbine`;
-    };
-
-    /**
-     * @param {string} id
-     * @param {{
-     *   TIER: integer,
-     *   MUFFLER: boolean,
-     *   CASING_MAIN: any,
-     *   CASING_GEAR: any,
-     *   CASING_TEX: string,
-     *   CNTROL_TEX: string,
-     *   RECIPES: string
-     * }} turbineInfo 
-     */
-    const distExtendTurbine = (id, turbineInfo) => {
-        const {
-            TIER: tier, MUFFLER: needsMuffler, CASING_MAIN: casing, RECIPES: recipeType,
-            CASING_GEAR: gearbox, CASING_TEX: mainView, CNTROL_TEX: controllerView
-        } = turbineInfo;
-        const casingBlock = casing.get();  // ケーシング
-        const gearboxBlock = gearbox.get(); // ギアボックス
-        const definedID = defineExtendTurbineID(id);
-        event.create(definedID, 'multiblock')
-            .machine((holder) => new LargeTurbineMachine(holder, tier + 3))
-            .rotationState(RotationState.ALL)
-            .recipeTypes(recipeType)
-            .recipeModifiers([(machine, recipe) => GTRecipeModifiers.LargeTurbineMachine(machine, recipe)])
-            .generator(true)
-            .appearanceBlock(casing)
-            .pattern(definition => FactoryBlockPattern.start()
-                // パターン
-                .aisle('FFFFFFCCCCC', 'F   F CVVVC', 'F   F CMMMC', 'F   F CVVVC', 'FFFFFFCCCCC')
-                .aisle('F   F CVVVC', 'CCCCCCCUUUZ', 'CHHHCTCPPPV', 'CCCCCCCUUUZ', 'F   F CVVVC')
-                .aisle('F   F CMMMC', 'CMMMCZCPPPV', 'RGGGPPPPWWR', 'CMMMCZCPPPV', 'F   F CMMMC')
-                .aisle('F   F CVVVC', 'CCCCCCCUUUZ', 'CH@HCTCPPPV', 'CCCCCCCUUUZ', 'F   F CVVVC')
-                .aisle('FFFFFFCCCCC', 'F   F CVVVC', 'F   F CMMMC', 'F   F CVVVC', 'FFFFFFCCCCC')
-                // コントローラー
-                .where('@', Predicates.controller(Predicates.blocks(definition.get())))
-                // ケーシング
-                .where('C', Predicates.blocks(casingBlock))
-                // フレーム材(ハイミスライト)
-                .where('F', Predicates.frames(GTMaterials.get('high_mithrite')))
-                // ケーシングorハッチ(マフラー以外)
-                .where('H', Predicates.blocks(casingBlock)
-                    .or(autoAbilities(definition.getRecipeTypes(), false, false, true, true, true, true))
-                    .or(autoAbilities(true, false, false)))
-                // ケーシングorハッチ(マフラー含む)
-                .where('M', Predicates.blocks(casingBlock)
-                    .or(autoAbilities(definition.getRecipeTypes(), false, false, true, true, true, true))
-                    .or(autoAbilities(true, needsMuffler, false)))
-                // タングステンスチールのパイプ外装
-                .where('P', Predicates.blocks(GTBlocks.CASING_TUNGSTENSTEEL_PIPE))
-                // ローターホルダーorエネルギーハッチ (※レーザーとサブステOUTも許可)
-                .where('R', Predicates.abilities(PartAbility.ROTOR_HOLDER).setExactLimit(1)
-                    .or(Predicates.abilities(PartAbility.OUTPUT_ENERGY, PartAbility.OUTPUT_LASER,
-                        PartAbility.SUBSTATION_OUTPUT_ENERGY).setExactLimit(1)))
-                // 強化ガラス
-                .where('T', Predicates.blocks(GTBlocks.CASING_TEMPERED_GLASS))
-                // コンピューター排熱口
-                .where('U', Predicates.blocks(GTBlocks.COMPUTER_HEAT_VENT))
-                // 排熱口
-                .where('V', Predicates.blocks(GCYMBlocks.HEAT_VENT))
-                // 超伝導コイル
-                .where('W', Predicates.blocks(GTBlocks.SUPERCONDUCTING_COIL))
-                // エンジン吸気口
-                .where('Z', Predicates.blocks(GTBlocks.CASING_EXTREME_ENGINE_INTAKE))
-                .where(' ', Predicates.any())
-                .build())
-            .workableCasingModel(mainView, controllerView)
-        ['tooltips(net.minecraft.network.chat.Component[])']([
-            Component.translatable('gtceu', 'multiblock.extended_large_turbine', 0),
-            Component.translatable('gtceu', 'multiblock.extended_large_turbine', 1),
-            Component.translatable('gtceu', `multiblock.${definedID}`)
-        ]);
-    };
-
-    /* ---- Machines ---- */
+    /*--------
+      Machines
+      --------*/
     // High Power Pyrolyse Oven
     // 高出力熱分解炉
     event.create('high_power_pyrolyse_oven', 'multiblock')
@@ -183,7 +101,7 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
             .where('C', Predicates.heatingCoils())
             .where('M', Predicates.abilities(PartAbility.MUFFLER).setExactLimit(1))
             .where(' ', Predicates.air())
-        .build())
+            .build())
         .workableCasingModel('gtceu:block/casings/solid/machine_casing_solid_steel',
             'gtceu:block/multiblock/pyrolyse_oven')
         .additionalDisplay((controller, components) => {
@@ -237,52 +155,16 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
             .where('A', Predicates.any())
             .where(' ', Predicates.air())
             .build())
-        .workableCasingModel('gtceu:block/casing/solid/machine_casing_stable_titanium', 'gtceu:block/multiblock/implosion_compressor')
-        ['tooltips(net.minecraft.network.chat.Component[])']([
-            Component.translatable(outTranslatableString('gtceu', 'multiblock.large_heat_exchanger', 0)),
-            Component.translatable(outTranslatableString('gtceu', 'multiblock.large_heat_exchanger', 1)),
-            Component.translatable(outTranslatableString('gtceu', 'shutup_gt5u'))
-        ]);
+        .workableCasingModel('gtceu:block/casings/solid/machine_casing_stable_titanium', 'gtceu:block/multiblock/implosion_compressor')
+    ['tooltips(net.minecraft.network.chat.Component[])']([
+        Component.translatable(outTranslatableString('gtceu', 'multiblock.large_heat_exchanger', 0)),
+        Component.translatable(outTranslatableString('gtceu', 'multiblock.large_heat_exchanger', 1)),
+        Component.translatable(outTranslatableString('gtceu', 'shutup_gt5u'))
+    ]);
 
-    /* ---- Generators ---- */
-    const turbineGenConditions = {
-        steam: {
-            TIER: GTValues.HV,
-            MUFFLER: false,
-            CASING_MAIN: GTBlocks.CASING_STEEL_TURBINE,
-            CASING_GEAR: GTBlocks.CASING_STEEL_GEARBOX,
-            CASING_TEX: GTCEu.id('block/casings/mechanic/machine_casing_turbine_steel'),
-            CNTROL_TEX: GTCEu.id('block/multiblock/generator/large_steam_turbine'),
-            RECIPES: GTRecipeTypes.STEAM_TURBINE_FUELS
-        },
-        hp_steam: {
-            TIER: GTValues.EV,
-            MUFFLER: false,
-            CASING_MAIN: GTBlocks.CASING_TITANIUM_TURBINE,
-            CASING_GEAR: GTBlocks.CASING_TITANIUM_GEARBOX,
-            CASING_TEX: GTCEu.id('block/casings/mechanic/machine_casing_turbine_titanium'),
-            CNTROL_TEX: GTCEu.id('block/multiblock/generator/large_steam_turbine'),
-            RECIPES: HighPressureSteamTurbine
-        },
-        gas: {
-            TIER: GTValues.EV,
-            MUFFLER: true,
-            CASING_MAIN: GTBlocks.CASING_STAINLESS_TURBINE,
-            CASING_MAIN: GTBlocks.CASING_STAINLESS_STEEL_GEARBOX,
-            CASING_TEX: GTCEu.id('block/casings/mechanic/machine_casing_turbine_stainless_steel'),
-            CNTROL_TEX: GTCEu.id('block/multiblock/generator/large_gas_turbine'),
-            RECIPES: GTRecipeTypes.GAS_TURBINE_FUELS
-        },
-        plasma: {
-            TIER: GTValues.EV,
-            MUFFLER: true,
-            CASING_MAIN: GTBlocks.CASING_STAINLESS_TURBINE,
-            CASING_MAIN: GTBlocks.CASING_STAINLESS_STEEL_GEARBOX,
-            CASING_TEX: GTCEu.id('block/casings/mechanic/machine_casing_turbine_tungstensteel'),
-            CNTROL_TEX: GTCEu.id('block/multiblock/generator/large_plasma_turbine'),
-            RECIPES: GTRecipeTypes.PLASMA_GENERATOR_FUELS
-        },
-    };
+    /*----------
+      Generators
+      ----------*/
     // Pressurized Water Reactor (PWR)
     // 加圧水型原子炉
     // …とは言うが、いちおう沸騰水型のまねごとはできる。
@@ -325,7 +207,7 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
     ]);
     // High Pressure Steam Turbine
     // 高圧蒸気タービン
-    // …はい、GT5uです。
+    console.log(HighPressureSteamTurbine);
     event.create('hp_steam_large_turbine', 'multiblock')
         .machine((holder) => new LargeTurbineMachine(holder, GTValues.EV))
         .rotationState(RotationState.ALL)
@@ -343,18 +225,17 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
             .where('R', Predicates.abilities(PartAbility.ROTOR_HOLDER).setExactLimit(1)
                 .or(Predicates.abilities(PartAbility.OUTPUT_ENERGY).setExactLimit(1)))
             .where('H', Predicates.blocks(GTBlocks.CASING_TITANIUM_TURBINE.get())
-                .or(Predicates.autoAbilities(definition.getRecipeTypes(), false, false, true, true, true, true))
+                .or(Predicates.autoAbilities(definition.getRecipeTypes()))
                 .or(Predicates.abilities(PartAbility.MAINTENANCE).setExactLimit(1)))
             .build())
         .workableCasingModel('gtceu:block/casings/mechanic/machine_casing_turbine_titanium', 'gtceu:block/multiblock/generator/large_steam_turbine')
     ['tooltips(net.minecraft.network.chat.Component[])']([
+        Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.EV] * 2),
+        Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.EV]),
         Component.translatable(outTranslatableString('gtceu', 'machine.hp_steam_turbine', 0)),
         Component.translatable(outTranslatableString('gtceu', 'machine.hp_steam_turbine', 1)),
         Component.translatable(outTranslatableString('gtceu', 'shutup_gt5u'))
     ]);
-    // Extended Large Turbine
-    // 拡張型大型タービン
-    Object.keys(turbineGenConditions).forEach((key) => {
-        distExtendTurbine(key, turbineGenConditions[key]);
-    });
+    /* Extended Large Turbine Generator Series | 拡張型タービン発電機 */
+    // TODO: 実装
 });

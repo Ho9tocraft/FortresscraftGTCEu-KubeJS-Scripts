@@ -1,3 +1,4 @@
+//requires: gtceu
 /**
  * GTCEu Extended Parallel Hatch
  */

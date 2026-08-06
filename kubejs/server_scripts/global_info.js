@@ -1,4 +1,4 @@
-// priority: 9000
+// priority: 20
 
 // GLOBAL OBJECT
 
@@ -22,94 +22,81 @@ global.loadingClasses = {
 // --- 関数 ---
 global.fgtceuHelpers = {
     armorSetEvent: {
-        // for Player
-        inHeadPL (player, targerArmorSet) {
-            return this.getAttirePartPL(player, 'head').id == targerArmorSet.head;
+        inHeadPL (player, targerArmorSet) { // for Player
+            return global.fgtceuHelpers.armorSetEvent.getAttirePL(player).head.id == targerArmorSet.head;
         },
-        inChestPL (player, targerArmorSet) {
-            return this.getAttirePartPL(player, 'chest').id == targerArmorSet.chest;
+        inChestPL (player, targerArmorSet) { // for Player
+            return global.fgtceuHelpers.armorSetEvent.getAttirePL(player).chest.id == targerArmorSet.chest;
         },
-        inLegsPL (player, targerArmorSet) {
-            const { inventory: inv } = player;
-            return this.getAttirePartPL(player, 'legs').id == targerArmorSet.legs;
+        inLegsPL (player, targerArmorSet) { // for Player
+            return global.fgtceuHelpers.armorSetEvent.getAttirePL(player).legs.id == targerArmorSet.legs;
         },
-        inFeetPL (player, targerArmorSet) {
-            const { inventory: inv } = player;
-            return this.getAttirePartPL(player, 'feet').id == targerArmorSet.feet;
+        inFeetPL (player, targerArmorSet) { // for Player
+            return global.fgtceuHelpers.armorSetEvent.getAttirePL(player).feet.id == targerArmorSet.feet;
         },
-        // for Non-Player
-        inHeadEnt (entity, targetArmorSet) {
-            const { EquipSlot } = loadingClasses;
-            const { idOf } = itemUtil;
-            return idOf(entity.getItemBySlot(EquipSlot.HEAD)) == targetArmorSet.head;
+        inHeadEnt (entity, targetArmorSet) { // for Non-Player
+            const { EquipSlot } = global.loadingClasses;
+            return global.fgtceuHelpers.itemUtil.idOf(entity.getItemBySlot(EquipSlot.HEAD)) == targetArmorSet.head;
         },
-        inChestEnt (entity, targetArmorSet) {
-            const { EquipSlot } = loadingClasses;
-            const { idOf } = itemUtil;
-            return idOf(entity.getItemBySlot(EquipSlot.CHEST)) == targetArmorSet.chest;
+        inChestEnt (entity, targetArmorSet) { // for Non-Player
+            const { EquipSlot } = global.loadingClasses;
+            return global.fgtceuHelpers.itemUtil.idOf(entity.getItemBySlot(EquipSlot.CHEST)) == targetArmorSet.chest;
         },
-        inLegsEnt (entity, targetArmorSet) {
-            const { EquipSlot } = loadingClasses;
-            const { idOf } = itemUtil;
-            return idOf(entity.getItemBySlot(EquipSlot.LEGS)) == targetArmorSet.legs;
+        inLegsEnt (entity, targetArmorSet) { // for Non-Player
+            const { EquipSlot } = global.loadingClasses;
+            return global.fgtceuHelpers.itemUtil.idOf(entity.getItemBySlot(EquipSlot.LEGS)) == targetArmorSet.legs;
         },
-        inFeetEnt (entity, targetArmorSet) {
-            const { EquipSlot } = loadingClasses;
-            const { idOf } = itemUtil;
-            return idOf(entity.getItemBySlot(EquipSlot.FEET)) == targetArmorSet.feet;
+        inFeetEnt (entity, targetArmorSet) { // for Non-Player
+            const { EquipSlot } = global.loadingClasses;
+            return global.fgtceuHelpers.itemUtil.idOf(entity.getItemBySlot(EquipSlot.FEET)) == targetArmorSet.feet;
         },
-        // check FullSet
         hasFullSet (player, targetArmorSet) { // for Player
-            return this.inHeadPL(player, targetArmorSet) &&
-                this.inChestPL(player, targetArmorSet) &&
-                this.inLegsPL(player, targetArmorSet) &&
-                this.inFeetPL(player, targetArmorSet);
+            return global.fgtceuHelpers.armorSetEvent.inHeadPL(player, targetArmorSet) &&
+                global.fgtceuHelpers.armorSetEvent.inChestPL(player, targetArmorSet) &&
+                global.fgtceuHelpers.armorSetEvent.inLegsPL(player, targetArmorSet) &&
+                global.fgtceuHelpers.armorSetEvent.inFeetPL(player, targetArmorSet);
         },
         hasMobFullSet (entity, targetArmorSet) { // for Non-Player
-            return this.inHeadEnt(entity, targetArmorSet) &&
-                this.inChestEnt(entity, targetArmorSet) &&
-                this.inLegsEnt(entity, targetArmorSet) &&
-                this.inFeetEnt(entity, targetArmorSet);
+            return global.fgtceuHelpers.armorSetEvent.inHeadEnt(entity, targetArmorSet) &&
+                global.fgtceuHelpers.armorSetEvent.inChestEnt(entity, targetArmorSet) &&
+                global.fgtceuHelpers.armorSetEvent.inLegsEnt(entity, targetArmorSet) &&
+                global.fgtceuHelpers.armorSetEvent.inFeetEnt(entity, targetArmorSet);
         },
-        getAttireFullPL (player) {
-            const { get } = player.inventory.armor;
+        getAttirePL (player) {
             return {
-                head: get(3),
-                chest: get(2),
-                legs: get(1),
-                feet: get(0)
+                head: player.inventory.armor.get(3),
+                chest: player.inventory.armor.get(2),
+                legs: player.inventory.armor.get(1),
+                feet: player.inventory.armor.get(0)
             };
-        },
-        getAttirePartPL (player, targetSlot) {
-            return this.getAttireFullPL(player)[targetSlot];
         },
     },
     botaniaMana: {
-        injectIntoAny: (player, amount, provide) => { // Generate Botania's Mana
-            const { IMana } = loadingClasses;
+        injectIntoAny (player, amount, provide) { // Generate Botania's Mana
+            const { IMana } = global.loadingClasses;
             const sent = IMana.instance().dispatchMana(
                 provide, player, amount, true
             );
             return sent;
         },
-        ejectIntoAny: (player, amount, consume) => { // Consume Botania's Mana
+        ejectIntoAny (player, amount, consume) { // Consume Botania's Mana
         }
     },
     curiosAPIInv: {
-        getCuriosMatched: (player, itemId) => {
-            const { CuriosApi } = loadingClasses;
+        getCuriosMatched (player, itemId) {
+            const { CuriosApi } = global.loadingClasses;
             const helper = CuriosApi.getCuriosHelper();
             const res = helper.findEquippedCurio(Item.of(itemId), player);
             return res;
         },
-        isCuriosEquipped: (player, itemId) => {
-            const res = getCuriosMatched(player, itemId);
+        isCuriosEquipped (player, itemId) {
+            const res = this.getCuriosMatched(player, itemId);
             return res && res.isPresent();
         }
     },
     itemUtil: {
-        idOf: (stack) => {
-            const { BIReg } = loadingClasses;
+        idOf (stack) {
+            const { BIReg } = global.loadingClasses;
             return String(BIReg.ITEM.getKey(stack.getItem()));
         },
     },
