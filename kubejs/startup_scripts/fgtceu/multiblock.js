@@ -35,7 +35,7 @@ GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
   event.create(GHouse)
     .category('multiblock')
     .setEUIO(loadingStartupClasses.GTCEu.$IO.IN)
-    .setMaxIOSize(4, 6, 1, 0)
+    .setMaxIOSize(4, 9, 1, 0)
     .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, FillDirection.LEFT_TO_RIGHT)
     .setSound(GTSoundEntries.FURNACE);
 
