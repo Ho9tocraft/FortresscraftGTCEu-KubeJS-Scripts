@@ -65,7 +65,7 @@ ServerEvents.recipes((event) => {
       .inputFluids(inFluid)
       .outputFluids(outFluid)
       .duration(duration)
-      .EUt(-outEUt);
+      .EUt(-V[outEUt]);
   });
   // High Pressure Steam Turbine
   Object.keys(FuelConds.hp_steam).forEach((fuel) => {
@@ -75,7 +75,7 @@ ServerEvents.recipes((event) => {
       .inputFluids(inFluid)
       .outputFluids(outFluid)
       .duration(duration)
-      .EUt(-outEUt);
+      .EUt(-V[outEUt]);
   });
   // Gas Turbine
   Object.keys(FuelConds.gas).forEach((fuel) => {
@@ -84,7 +84,7 @@ ServerEvents.recipes((event) => {
     GasTurbineGenerator(`generation_grid_${fuel}`)
       .inputFluids(inFluid)
       .duration(duration)
-      .EUt(-outEUt);
+      .EUt(-V[outEUt]);
   });
   // Plasma Turbine & Large Heat Exchanger (Plasma Section)
   const defaultPlasmas = ['helium', 'oxygen', 'nitrogen', 'argon', 'iron', 'tin', 'nickel', 'americium'];

@@ -37,7 +37,8 @@ GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
     .setEUIO(loadingStartupClasses.GTCEu.$IO.IN)
     .setMaxIOSize(4, 9, 1, 0)
     .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, FillDirection.LEFT_TO_RIGHT)
-    .setSound(GTSoundEntries.FURNACE);
+    .setSound(GTSoundEntries.FURNACE)
+    .setSlotOverlay(true, false, GuiTextures.BOX_OVERLAY);
 
   /* ---- EN Provided ---- */
   // Fission Reactor
@@ -66,7 +67,10 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
   const {
     $CoilWorkableEMBMachine: CoilWorkableElectricMultiblockMachine,
     $FusionReactorMachine: FusionReactorMachine,
+    $GTRecipe: GTRecipe,
     $LargeTurbineMachine: LargeTurbineMachine,
+    $MetaMachine: MetaMachine,
+    $RecipeModifier: RecipeModifier,
   } = loadingStartupClasses.GTCEu;
   // レシピタイプ定義
   const {
@@ -80,6 +84,26 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
   const {
     outTranslatableString,
   } = FGTCEuCommonStartupFunctions;
+
+  /*----
+    Custom Modifiers
+    ----*/
+  /**
+   * 拡張型タービン発電機専用のモディファイヤーです。
+   * 流石にクラス分けしていないので、残念ですがこれが限界。
+   * @param {any} machine 
+   * @param {any} recipe 
+   * @returns 
+   */
+  function ExtendedLargeTurbineModifier(machine, recipe) {
+    if (!(machine instanceof MetaMachine) || !(recipe instanceof GTRecipe)) return ModifierFunction.NULL;
+    if (!(machine instanceof LargeTurbineMachine)) return RecipeModifier.nullWrongType(LargeTurbineMachine, machine);
+    else {
+      return ModifierFunction.builder()
+        .eutMultiplier(16.0)
+        .build();
+    }
+  }
 
   /*--------
     Machines
@@ -127,7 +151,7 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
   event.create('modern_green_house', 'multiblock')
     .rotationState(RotationState.NON_Y_AXIS)
     .recipeTypes(GHouse)
-    .recipeModifiers([GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.BATCH_MODE])
+    .recipeModifiers([GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.BATCH_MODE, GTRecipeModifiers.OC_NON_PERFECT_SUBTICK])
     .appearanceBlock(GTBlocks.CASING_STEEL_SOLID)
     .pattern(definition => FactoryBlockPattern.start()
       .aisle('CCCCC', 'CHHHC', 'CGGGC', 'CGGGC', 'CCGCC', '0CCC0')
@@ -283,7 +307,10 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .machine((holder) => new LargeTurbineMachine(holder, GTValues.LuV))
       .rotationState(RotationState.ALL)
       .recipeTypes('steam_turbine')
-      .recipeModifiers([(machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe)])
+      .recipeModifiers([
+        (machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe),
+        (machine, recipe) => ExtendedLargeTurbineModifier(machine, recipe)
+      ])
       .generator(true)
       .appearanceBlock(GTBlocks.CASING_STEEL_TURBINE)
       .pattern(definition => FactoryBlockPattern.start()
@@ -324,7 +351,10 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .machine((holder) => new LargeTurbineMachine(holder, GTValues.LuV))
       .rotationState(RotationState.ALL)
       .recipeTypes('hp_steam_turbine')
-      .recipeModifiers([(machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe)])
+      .recipeModifiers([
+        (machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe),
+        (machine, recipe) => ExtendedLargeTurbineModifier(machine, recipe)
+      ])
       .generator(true)
       .appearanceBlock(GTBlocks.CASING_TITANIUM_TURBINE)
       .pattern(definition => FactoryBlockPattern.start()
@@ -365,7 +395,10 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .machine((holder) => new LargeTurbineMachine(holder, GTValues.LuV))
       .rotationState(RotationState.ALL)
       .recipeTypes('plasma_generator')
-      .recipeModifiers([(machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe)])
+      .recipeModifiers([
+        (machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe),
+        (machine, recipe) => ExtendedLargeTurbineModifier(machine, recipe)
+      ])
       .generator(true)
       .appearanceBlock(GTBlocks.CASING_TUNGSTENSTEEL_TURBINE)
       .pattern(definition => FactoryBlockPattern.start()

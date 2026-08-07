@@ -5,11 +5,14 @@ global.loadingStartupClasses = {
   GTCEu: {
     $CoilWorkableEMBMachine: Java.loadClass('com.gregtechceu.gtceu.api.machine.multiblock.CoilWorkableElectricMultiblockMachine'),
     $FusionReactorMachine: Java.loadClass('com.gregtechceu.gtceu.common.machine.multiblock.electric.FusionReactorMachine'),
+    $GTRecipe: Java.loadClass('com.gregtechceu.gtceu.api.recipe.GTRecipe'),
     $IO: Java.loadClass('com.gregtechceu.gtceu.api.capability.recipe.IO'),
+    $LargeTurbineMachine: Java.loadClass('com.gregtechceu.gtceu.common.machine.multiblock.generator.LargeTurbineMachine'),
     $MachineModelProp: Java.loadClass('com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties'),
+    $MetaMachine: Java.loadClass('com.gregtechceu.gtceu.api.machine.MetaMachine'),
     $ParallelHatchPart: Java.loadClass('com.gregtechceu.gtceu.common.machine.multiblock.part.ParallelHatchPartMachine'),
     $RecipeLogic: Java.loadClass('com.gregtechceu.gtceu.api.machine.trait.RecipeLogic'),
-    $LargeTurbineMachine: Java.loadClass('com.gregtechceu.gtceu.common.machine.multiblock.generator.LargeTurbineMachine'),
+    $RecipeModifier: Java.loadClass('com.gregtechceu.gtceu.api.recipe.modifier.RecipeModifier'),
   },
 };
 
