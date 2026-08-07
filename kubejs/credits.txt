@@ -1,6 +1,6 @@
 Texture Reference:
-    Modernity-GTNH: ABKQPO   / CC BY-NC-SA 4.0 License
-    Monifactory: Pansmith    / LGPL v3
-    Star Technology: trulyno / MIT License
+  Modernity-GTNH: ABKQPO   / CC BY-NC-SA 4.0 License
+  Monifactory: Pansmith    / LGPL v3
+  Star Technology: trulyno / MIT License
 
 License: CC BY-NC-SA 4.0 License
