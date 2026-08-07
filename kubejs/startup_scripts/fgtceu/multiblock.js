@@ -149,7 +149,7 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .where('0', Predicates.any())
       .build())
     .workableCasingModel('gtceu:block/casings/solid/machine_casing_solid_steel',
-      'block/multiblock/generator/large_steam_turbine')
+      'gtceu:block/multiblock/generator/large_steam_turbine')
   ['tooltips(net.minecraft.network.chat.Component[])']([
     Component.translatable(outTranslatableString('gtceu', 'multiblock.green_house', 0)),
     Component.translatable(outTranslatableString('gtceu', 'multiblock.green_house', 1))
@@ -438,7 +438,7 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
         .where(' ', Predicates.any())
         .build())
       .workableCasingModel(GTCEu.id('block/casings/mechanic/machine_casing_turbine_stainless_steel'),
-        GTCEu.id('block/multiblock/generator/large_gas_steam_turbine'))
+        GTCEu.id('block/multiblock/generator/large_gas_turbine'))
     ['tooltips(net.minecraft.network.chat.Component[])']([
       Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.ZPM] * 2),
       Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.ZPM]),
