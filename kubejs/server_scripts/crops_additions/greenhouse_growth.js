@@ -23,7 +23,7 @@ ServerEvents.recipes(event => {
     dist.count = dist.count > 64 ? 64 : dist.count;
     optDist = optDist || [];
     const isMADist = /^mystical/.test(dist.id);
-    const crop = dist.id.replace(/:([a-z0-9_]+?)(?:_essence|item|_log)?$/, '$1');
+    const crop = dist.id.replace(/.+:([a-z0-9_]+?)(?:_essence|item|_log)?$/, '$1');
     const chanceDist = isMADist ? 'mysticalagriculture:fertilized_essence' : dist.id;
     const chanceDCount = isMADist ? '2' : `${Math.round(dist.count / 6 - (seed.count === 1 ? 1 : 0))}`.replace(/\.\d*$/, '');
     const [oDist1, oDist2, oDist3] = optDist; // optDistが4個以上の要素を持っていたとしても無視される
@@ -44,7 +44,7 @@ ServerEvents.recipes(event => {
           .inputFluids('minecraft:water 1000')
           .itemOutputs(`${seed.count}x ${seed.id}`, `${dist.count}x ${dist.id}`, `${dist.count}x ${dist.id}`)
           .chancedOutput(`${chanceDCount * 2}x ${chanceDist}`, 1000, 200)
-          .chancedOutput(`2x ${seed}`, 500, 100)
+          .chancedOutput(`2x ${seed.id}`, 500, 100)
           .duration(900)
           .EUt(GTValues.VHA[GTValues.MV]);
         break;
@@ -66,7 +66,7 @@ ServerEvents.recipes(event => {
           .itemOutputs(`${seed.count}x ${seed.id}`, `${dist.count}x ${dist.id}`, `${dist.count}x ${dist.id}`,
             `${oDist1.count}x ${oDist1.id}`)
           .chancedOutput(`${chanceDCount * 2}x ${chanceDist}`, 1000, 200)
-          .chancedOutput(`2x ${seed}`, 500, 100)
+          .chancedOutput(`2x ${seed.id}`, 500, 100)
           .duration(900)
           .EUt(GTValues.VHA[GTValues.MV]);
         break;
@@ -90,7 +90,7 @@ ServerEvents.recipes(event => {
             `${oDist1.count}x ${oDist1.id}`,
             `${oDist2.count}x ${oDist2.id}`)
           .chancedOutput(`${chanceDCount * 2}x ${chanceDist}`, 1000, 200)
-          .chancedOutput(`2x ${seed}`, 500, 100)
+          .chancedOutput(`2x ${seed.id}`, 500, 100)
           .duration(900)
           .EUt(GTValues.VHA[GTValues.MV]);
         break;
@@ -116,7 +116,7 @@ ServerEvents.recipes(event => {
             `${oDist2.count}x ${oDist2.id}`,
             `${oDist3.count}x ${oDist3.id}`)
           .chancedOutput(`${chanceDCount * 2}x ${chanceDist}`, 1000, 200)
-          .chancedOutput(`2x ${seed}`, 500, 100)
+          .chancedOutput(`2x ${seed.id}`, 500, 100)
           .duration(900)
           .EUt(GTValues.VHA[GTValues.MV]);
         break;
