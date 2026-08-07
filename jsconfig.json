@@ -1,32 +1,32 @@
 {
-    "include": [
-        "./**/*.js",
-        "./.probe/**/*.d.ts"
+  "include": [
+    "./**/*.js",
+    "./.probe/**/*.d.ts"
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "checkJs": false,
+    "ignoreDeprecations": "6.0",
+    "lib": [
+      "ES2015"
     ],
-    "compilerOptions": {
-        "allowJs": true,
-        "baseUrl": ".",
-        "checkJs": false,
-        "ignoreDeprecations": "6.0",
-        "lib": [
-            "ES2015"
-        ],
-        "module": "commonjs",
-        "rootDir": ".",
-        "skipDefaultLibCheck": true,
-        "skipLibCheck": true,
-        "target": "ES2015",
-        "types": [],
-        "paths": {
-            "java:*": [
-                "./.probe/startup/global/*",
-                "./.probe/startup/packages/*",
-                "./.probe/server/global/*",
-                "./.probe/server/packages/*",
-                "./.probe/client/global/*",
-                "./.probe/client/packages/*",
-                "./.probe/shared/*",
-            ]
-        }
+    "module": "commonjs",
+    "rootDir": ".",
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "target": "ES2015",
+    "types": [],
+    "paths": {
+      "java:*": [
+        "./.probe/startup/global/*",
+        "./.probe/startup/packages/*",
+        "./.probe/server/global/*",
+        "./.probe/server/packages/*",
+        "./.probe/client/global/*",
+        "./.probe/client/packages/*",
+        "./.probe/shared/*",
+      ]
     }
+  }
 }

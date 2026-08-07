@@ -1,9 +1,9 @@
 {
-    "__COMMENT__SLASHBLADE_JS_ITEMS__.header":               "~~~~~~~~~~~~~~~~~~~~~~~~",
-    "__COMMENT__SLASHBLADE_JS_ITEMS__.flufff":               "> End Game SlashBlades <",
-    "__COMMENT__SLASHBLADE_JS_ITEMS__.footer":               "~~~~~~~~~~~~~~~~~~~~~~~~",
-    "item.fgtceu.moonlight_slashblade":                      "Moonlight Exellia",
-    "item.fgtceu.yuzukitukumo_ex":                           "Tukumo Exterminated",
-    "singularity.avaritia.proudsoul":                        "Blade Soul Trapezohedron",
-    "crop.slashblade.proudsoul":                             "Blade Soul"
+  "__COMMENT__SLASHBLADE_JS_ITEMS__.header": "~~~~~~~~~~~~~~~~~~~~~~~~",
+  "__COMMENT__SLASHBLADE_JS_ITEMS__.flufff": "> End Game SlashBlades <",
+  "__COMMENT__SLASHBLADE_JS_ITEMS__.footer": "~~~~~~~~~~~~~~~~~~~~~~~~",
+  "item.fgtceu.moonlight_slashblade": "Moonlight Exellia",
+  "item.fgtceu.yuzukitukumo_ex": "Tukumo Exterminated",
+  "singularity.avaritia.proudsoul": "Blade Soul Trapezohedron",
+  "crop.slashblade.proudsoul": "Blade Soul"
 }

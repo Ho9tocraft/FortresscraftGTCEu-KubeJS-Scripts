@@ -1,9 +1,9 @@
 {
-    "__COMMENT__SLASHBLADE_JS_ITEMS__.header":               "~~~~~~~~~~~~~~~~~~~~~~~~",
-    "__COMMENT__SLASHBLADE_JS_ITEMS__.flufff":               "> End Game SlashBlades <",
-    "__COMMENT__SLASHBLADE_JS_ITEMS__.footer":               "~~~~~~~~~~~~~~~~~~~~~~~~",
-    "item.fgtceu.moonlight_slashblade":                      "銘刀「廻天」月光",
-    "item.fgtceu.yuzukitukumo_ex":                           "真伝・結月刀「付喪」穿絶",
-    "singularity.avaritia.proudsoul":                        "揺蕩う刀の魂結晶",
-    "crop.slashblade.proudsoul":                             "刀の魂"
+  "__COMMENT__SLASHBLADE_JS_ITEMS__.header": "~~~~~~~~~~~~~~~~~~~~~~~~",
+  "__COMMENT__SLASHBLADE_JS_ITEMS__.flufff": "> End Game SlashBlades <",
+  "__COMMENT__SLASHBLADE_JS_ITEMS__.footer": "~~~~~~~~~~~~~~~~~~~~~~~~",
+  "item.fgtceu.moonlight_slashblade": "銘刀「廻天」月光",
+  "item.fgtceu.yuzukitukumo_ex": "真伝・結月刀「付喪」穿絶",
+  "singularity.avaritia.proudsoul": "揺蕩う刀の魂結晶",
+  "crop.slashblade.proudsoul": "刀の魂"
 }
