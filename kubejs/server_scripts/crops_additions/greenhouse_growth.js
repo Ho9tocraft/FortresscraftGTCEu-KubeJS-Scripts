@@ -7,6 +7,7 @@ ServerEvents.recipes(event => {
   const { arrayIncludes } = global.fgtceuHelpers.jsUtil;
   // Green House recipes
   const { green_house: GTFarm,  } = event.recipes.gtceu;
+  const Math = JavaMath;
 
   /**
    * 
@@ -16,16 +17,21 @@ ServerEvents.recipes(event => {
    */
   const distCropsGHRecipes = (seed, dist, optDist) => {
     if (!seed || !seed.id || !dist || !dist.id || dist.count < 1) return; // エラーチェック
-    const regexPlaceholder = /<pl?a?ce?ho?l?d?e?r?>/i;
-    if (regexPlaceholder.test(seed.id) || regexPlaceholder.test(dist.id)) return; // プレースホルダーは無視
+    const regexPlaceholder = /(?:p(?:lace)?h(?:older)?|ph|<ph>)/i;
+    if (regexPlaceholder.test(seed.id) || regexPlaceholder.test(dist.id) ||
+      seed.id === '<PH>' || dist.id === '<PH>') return; // プレースホルダーは無視
     seed.count = seed.count || 2;
     seed.count = seed.count > 64 ? 64 : seed.count;
     dist.count = dist.count > 64 ? 64 : dist.count;
     optDist = optDist || [];
     const isMADist = /^mystical/.test(dist.id);
-    const crop = dist.id.replace(/.+:([a-z0-9_]+?)(?:_essence|item|_log)?$/, '$1');
+    const crop = dist.id.replace(/(.+):([a-z0-9_]+?)(?:_essence|item|_log)?$/, '$1_$2');
     const chanceDist = isMADist ? 'mysticalagriculture:fertilized_essence' : dist.id;
-    const chanceDCount = isMADist ? '2' : `${Math.round(dist.count / 6 - (seed.count === 1 ? 1 : 0))}`.replace(/\.\d*$/, '');
+    const chanceDCount = isMADist ? '2' :
+      `${Math.max(Math.round(dist.count / 6) - (
+        (seed.count === 1 && seed.id === dist.id) ? 1 : 0
+      ), 1)}`;
+    console.log(`${chanceDCount}x ${chanceDist}`);
     const [oDist1, oDist2, oDist3] = optDist; // optDistが4個以上の要素を持っていたとしても無視される
     switch (optDist.length) {
       case 0:
@@ -34,7 +40,7 @@ ServerEvents.recipes(event => {
           .circuit(1)
           .inputFluids('minecraft:water 1000')
           .itemOutputs(`${seed.count}x ${seed.id}`, `${dist.count}x ${dist.id}`)
-          .chancedOutput(chanceDist, 500, 100)
+          .chancedOutput(`1x ${chanceDist}`, 500, 100)
           .chancedOutput(seed.id, 250, 50)
           .duration(1200)
           .EUt(GTValues.VHA[GTValues.MV]);
@@ -54,8 +60,8 @@ ServerEvents.recipes(event => {
           .circuit(1)
           .inputFluids('minecraft:water 1000')
           .itemOutputs(`${seed.count}x ${seed.id}`, `${dist.count}x ${dist.id}`,
-            `${`${Math.round(oDist1.count / 2)}`.replace(/\.\d*$/, '')}x ${oDist1.id}`)
-          .chancedOutput(chanceDist, 500, 100)
+            `${Math.round(oDist1.count / 2)}x ${oDist1.id}`)
+          .chancedOutput(`1x ${chanceDist}`, 500, 100)
           .chancedOutput(seed.id, 250, 50)
           .duration(1200)
           .EUt(GTValues.VHA[GTValues.MV]);
@@ -76,9 +82,9 @@ ServerEvents.recipes(event => {
           .circuit(1)
           .inputFluids('minecraft:water 1000')
           .itemOutputs(`${seed.count}x ${seed.id}`, `${dist.count}x ${dist.id}`,
-            `${`${Math.round(oDist1.count / 2)}`.replace(/\.\d*$/, '')}x ${oDist1.id}`,
-            `${`${Math.round(oDist2.count / 2)}`.replace(/\.\d*$/, '')}x ${oDist2.id}`)
-          .chancedOutput(chanceDist, 500, 100)
+            `${Math.round(oDist1.count / 2)}x ${oDist1.id}`,
+            `${Math.round(oDist2.count / 2)}x ${oDist2.id}`)
+          .chancedOutput(`1x ${chanceDist}`, 500, 100)
           .chancedOutput(seed.id, 250, 50)
           .duration(1200)
           .EUt(GTValues.VHA[GTValues.MV]);
@@ -100,10 +106,10 @@ ServerEvents.recipes(event => {
           .circuit(1)
           .inputFluids('minecraft:water 1000')
           .itemOutputs(`${seed.count}x ${seed.id}`, `${dist.count}x ${dist.id}`,
-            `${`${Math.round(oDist1.count / 2)}`.replace(/\.\d*$/, '')}x ${oDist1.id}`,
-            `${`${Math.round(oDist2.count / 2)}`.replace(/\.\d*$/, '')}x ${oDist2.id}`,
-            `${`${Math.round(oDist3.count / 2)}`.replace(/\.\d*$/, '')}x ${oDist3.id}`)
-          .chancedOutput(chanceDist, 500, 100)
+            `${Math.round(oDist1.count / 2)}x ${oDist1.id}`,
+            `${Math.round(oDist2.count / 2)}x ${oDist2.id}`,
+            `${Math.round(oDist3.count / 2)}x ${oDist3.id}`)
+          .chancedOutput(`1x ${chanceDist}`, 500, 100)
           .chancedOutput(seed.id, 250, 50)
           .duration(1200)
           .EUt(GTValues.VHA[GTValues.MV]);
@@ -139,7 +145,7 @@ ServerEvents.recipes(event => {
     { seed: { id: 'minecraft:jungle_sapling', count: 6 }, dist: { id: 'minecraft:jungle_log', count: 64 }, optDist: [] },
     { seed: { id: 'minecraft:acacia_sapling', count: 6 }, dist: { id: 'minecraft:acacia_log', count: 64 }, optDist: [] },
     { seed: { id: 'minecraft:dark_oak_sapling', count: 6 }, dist: { id: 'minecraft:dark_oak_log', count: 64 }, optDist: [{ id: 'minecraft:apple', count: 4 }] },
-    { seed: { id: 'minecraft:mangrove_sapling', count: 6 }, dist: { id: 'minecraft:mangrove_log', count: 64 }, optDist: [] },
+    { seed: { id: 'minecraft:mangrove_propagule', count: 6 }, dist: { id: 'minecraft:mangrove_log', count: 64 }, optDist: [] },
     { seed: { id: 'minecraft:cherry_sapling', count: 6 }, dist: { id: 'minecraft:cherry_log', count: 64 }, optDist: [] },
     // Minecraft crops
     { seed: { id: 'minecraft:pumpkin_seeds', count: 4 }, dist: { id: 'minecraft:pumpkin', count: 6 }, optDist: [] },
@@ -290,7 +296,7 @@ ServerEvents.recipes(event => {
     { seed: { id: 'pamhc2trees:cinnamon_sapling', count: 4 }, dist: { id: 'pamhc2trees:cinnamonitem', count: 16 }, optDist: [{id:'pamhc2trees:pamcinnamon', count: 32}] },
     { seed: { id: 'pamhc2trees:coconut_sapling', count: 4 }, dist: { id: 'pamhc2trees:coconutitem', count: 16 }, optDist: [{id:'minecraft:jungle_log', count: 32}] },
     { seed: { id: 'pamhc2trees:date_sapling', count: 4 }, dist: { id: 'pamhc2trees:dateitem', count: 16 }, optDist: [{id:'pamtreewood:date_log', count: 32}] },
-    { seed: { id: 'pamhc2trees:dragonfluit_sapling', count: 4 }, dist: { id: 'pamhc2trees:dragonfruititem', count: 16 }, optDist: [{id:'pamtreewood:dragonfruit_log', count: 32}] },
+    { seed: { id: 'pamhc2trees:dragonfruit_sapling', count: 4 }, dist: { id: 'pamhc2trees:dragonfruititem', count: 16 }, optDist: [{id:'pamtreewood:dragonfruit_log', count: 32}] },
     { seed: { id: 'pamhc2trees:durian_sapling', count: 4 }, dist: { id: 'pamhc2trees:durianitem', count: 16 }, optDist: [{id:'minecraft:jungle_log', count: 32}] },
     { seed: { id: 'pamhc2trees:fig_sapling', count: 4 }, dist: { id: 'pamhc2trees:figitem', count: 16 }, optDist: [{id:'minecraft:jungle_log', count: 32}] },
     { seed: { id: 'pamhc2trees:grapefruit_sapling', count: 4 }, dist: { id: 'pamhc2trees:grapefruititem', count: 16 }, optDist: [{id:'minecraft:jungle_log', count: 32}] },
