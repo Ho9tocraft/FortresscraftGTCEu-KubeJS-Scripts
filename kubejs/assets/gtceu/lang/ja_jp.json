@@ -120,6 +120,7 @@
     "gtceu.fission_reactor": "加圧水型原子炉（PWR）",
     "gtceu.green_house": "モダン・グリーンハウス",
     "gtceu.hp_pyrolyse_oven": "高出力熱分解炉",
+    "gtceu.hp_steam_turbine": "高圧蒸気タービン",
     "gtceu.large_heat_exchanger": "大型熱交換器",
     "__MATERIAL__GTCEU_ADDITION__.article.2c": "## Machines/Tooltips",
     "gtceu.machine.extended_large_turbine.tooltip.0": "これが、俺達の純然たる力だッ！",

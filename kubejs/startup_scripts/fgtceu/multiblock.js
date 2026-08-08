@@ -442,7 +442,10 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .machine((holder) => new LargeTurbineMachine(holder, GTValues.LuV))
       .rotationState(RotationState.ALL)
       .recipeTypes('gas_turbine')
-      .recipeModifiers([(machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe)])
+      .recipeModifiers([
+        (machine, recipe) => LargeTurbineMachine.recipeModifier(machine, recipe),
+        (machine, recipe) => ExtendedLargeTurbineModifier(machine, recipe)
+      ])
       .generator(true)
       .appearanceBlock(GTBlocks.CASING_STAINLESS_TURBINE)
       .pattern(definition => FactoryBlockPattern.start()
