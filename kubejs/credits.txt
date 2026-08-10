@@ -3,4 +3,12 @@ Texture Reference:
   Monifactory: Pansmith    / LGPL v3
   Star Technology: trulyno / MIT License
 
-License: CC BY-NC-SA 4.0 License
+Translate Reference:
+  Based: FINAL FANTASY XIV
+  Full Faithial Parallel Rapid Assembly Line: FINAL FANTASY XIV (Endwalker - Footfalls)
+
+License: CC BY-NC-SA 4.0 License & LGPL v3
+
+extra: Copyright
+FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
+FINAL FANTASY XIV (C) SQUARE ENIX CO., LTD. All rights reserved.
