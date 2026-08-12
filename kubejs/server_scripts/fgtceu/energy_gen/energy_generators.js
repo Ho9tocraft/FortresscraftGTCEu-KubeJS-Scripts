@@ -8,6 +8,7 @@ ServerEvents.recipes((event) => {
   const {
     hp_steam_turbine: HPSteamTurbineGenerator,
     gas_turbine: GasTurbineGenerator,
+    large_chemical_reactor: LargeChemicalReactor,
     large_heat_exchanger: LargeHeatExchanger,
     plasma_generator: PlasmaTurbineGenerator,
     steam_turbine: SteamTurbineGenerator,
@@ -57,6 +58,7 @@ ServerEvents.recipes((event) => {
     },
   };
 
+  /* ---- Fuels -> EU ---- */
   // Steam Turbine
   Object.keys(FuelConds.steam).forEach((fuel) => {
     if (!fuel || !(fuel in FuelConds.steam)) return; // 空文字・無要素スキップ
@@ -117,8 +119,7 @@ ServerEvents.recipes((event) => {
       .EUt(-V[outEUt]);
   });
 
-  // 熱交換
-
+  /* ---- 熱交換 ---- */
   const excRateHDRCtoLDRC = 100;
   const excRateLDRCtoWater = 960;
   const coolingRate = 4000;
@@ -136,4 +137,13 @@ ServerEvents.recipes((event) => {
     .outputFluids(`kubejs:${coolant.ReactorCoolant} ${coolingRate}`,
       `gtceu:superheated_steam ${coolingRate * excRateLDRCtoWater}`)
     .duration(1);
+
+  /* ---- Fuels Generating ---- */
+  // TODO: 10％の確率で鬼神の甲殻片消費する燃料を作成する
+  LargeChemicalReactor('zurvanised_nitrobenzene')
+    .chancedInput('kubejs:zurvanite_carapace_fragment', 1000, 0)
+    .inputFluids('gtceu:nitrobenzene 1000', 'gtceu:phosphoric_acid 1000', 'gtceu:mana 3000')
+    .outputFluids('gtceu:zurvanised_nitrobenzene 4000', 'gtceu:nitration_mixture 1000')
+    .duration(160)
+    .EUt(GTValues.VHA[GTValues.EV]);
 });

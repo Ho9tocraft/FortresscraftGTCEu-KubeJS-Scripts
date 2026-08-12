@@ -366,6 +366,5 @@ GTCEuStartupEvents.registry('gtceu:material', event => {
     .flags(GTMaterialFlags.GENERATE_PLATE, GTMaterialFlags.GENERATE_DENSE, GTMaterialFlags.GENERATE_BOLT_SCREW, GTMaterialFlags.GENERATE_RING, GTMaterialFlags.GENERATE_ROTOR)
     .rotorStats(51200, 3600, 10.0, 78643200)
     .formula('焉')
-    //.components('5x excerium', '5x ascendium', '4x arrokothium', '4x tungstensteel', '3x durium', '3x lunar_adamantium', '3x platinum', '3x neutronium', '3x mana');
     .components('5x excerium', '5x arrokothium', '5x lunar_adamantium', '3x hsse');
 });

@@ -2,6 +2,7 @@
 GTCEuStartupEvents.registry('gtceu:machine', event => {
   const { loadedMods, packFeatures, FGTCEuCommonStartupFunctions } = global;
   const { outTranslatableString } = FGTCEuCommonStartupFunctions;
+  // ShishamoTech導入状況時
   if (!loadedMods.SHISHAMO_TECH || packFeatures.bypassSTDisable) {
     // Full-faithial Parallel Rapid Assembly Line
     // 完全並列型高速組立ライン

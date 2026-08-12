@@ -105,6 +105,23 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
     }
   }
 
+  /**
+   * Oversailing Fusion Reactor限定Mod
+   * @param {any} machine 
+   * @param {any} recipe 
+   * @returns 
+   */
+  function OversailingFusionReactorModifier(machine, recipe) {
+    if (!(machine instanceof MetaMachine) || !(recipe instanceof GTRecipe)) return ModifierFunction.NULL;
+    if (!(machine instanceof FusionReactorMachine)) return RecipeModifier.nullWrongType(FusionReactorMachine, machine);
+    else {
+      return ModifierFunction.builder()
+        .eutMultiplier(0.95)
+        .durationMultiplier(0.8)
+        .build();
+    }
+  }
+
   /*--------
     Machines
     --------*/
@@ -178,17 +195,6 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
     Component.translatable(outTranslatableString('gtceu', 'multiblock.green_house', 0)),
     Component.translatable(outTranslatableString('gtceu', 'multiblock.green_house', 1))
   ]);
-  // [NOW PENDING] Oversailing Fusion Reactor (O-FR)
-  /**
-  create('oversailing_fusion_reactor', 'multiblock')
-      .rotationState(RotationState.ALL)
-      .recipeTypes('fusion_reactor')
-      .recipeModifiers([
-          GTRecipeModifiers.PARALLEL_HATCH,
-          GTRecipeModifiers.BATCH_MODE,
-          (machine, recipe) => FusionReactorMachine.recipeModifier(machine, recipe)
-      ])
-  */
   // Large Heat Exchanger
   // 大型熱交換器
   // GregTech 5 Unofficial, Comes Again to GTCEu Modern!
