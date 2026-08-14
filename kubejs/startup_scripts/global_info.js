@@ -65,4 +65,54 @@ global.FGTCEuCommonStartupFunctions = {
     if (modid in MatchSpecialCode && flagCode in MatchSpecialCode[modid]) return MatchSpecialCode[modid][flagCode];
     return `${modid}.${codeTxt}.tooltip${typeof sectNum === 'undefined' ? '' : `.${sectNum}`}`;
   },
+  FGTCEuMachineMods: {
+    /**
+     * Modifiers for XL Turbine
+     * @param {$MetaMachine} machine 
+     * @param {$GTRecipe} recipe 
+     * @returns 
+     */
+    ExtendedLargeTurbineModifier (machine, recipe) {
+      const {
+        $GTRecipe: GTRecipe,
+        $LargeTurbineMachine: LargeTurbineMachine,
+        $MetaMachine: MetaMachine,
+        $RecipeModifier: RecipeMod
+      } = global.loadingStartupClasses.GTCEu;
+      if (!(machine instanceof MetaMachine) || !(recipe instanceof GTRecipe)) return ModifierFunction.NULL;
+      if (!(machine instanceof LargeTurbineMachine)) {
+        return RecipeMod.nullWrongType(LargeTurbineMachine, machine);
+      }
+      else {
+        return ModifierFunction.builder()
+          .eutMultiplier(16.0)
+          .build();
+      }
+    },
+    /**
+     * Modifiers for Heat Exchanger
+     * @param {$MetaMachine} machine 
+     * @param {$GTRecipe} recipe 
+     */
+    HeatExchangerModifier (machine, recipe) {
+      return ModifierFunction.IDENTITY;
+    },
+    /**
+     * 
+     * @param {$MetaMachine} machine 
+     * @param {$GTRecipe} recipe 
+     */
+    OversailingFusionReactorModifier (machine, recipe) {
+      const {
+        $FusionReactorMachine: FusionReactorMachine,
+        $GTRecipe: GTRecipe,
+        $MetaMachine: MetaMachine,
+        $RecipeModifier: RecipeMod
+      } = global.loadingStartupClasses.GTCEu;
+      if (!(machine instanceof MetaMachine) || !(recipe instanceof GTRecipe)) return ModifierFunction.NULL;
+      if (!(machine instanceof FusionReactorMachine)) {
+        return RecipeMod.nullWrongType(FusionReactorMachine, machine);
+      }
+    },
+  },
 };
