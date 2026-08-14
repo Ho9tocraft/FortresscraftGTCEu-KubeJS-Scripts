@@ -124,6 +124,7 @@
     "block.gtceu.hp_steam_large_turbine": "Large High Pressure Steam Turbine",
     "block.gtceu.large_heat_exchanger": "Large Heat Exchanger",
     "block.gtceu.modern_green_house": "Greenhouse",
+    "block.gtceu.oversailing_fusion_reactor": "Oversailing Fusion Reactor (OFR)",
     "__MATERIAL__GTCEU_ADDITION__.article.2b": "## Machines/Recipe Type",
     "gtceu.fission_reactor": "Fission Reactor",
     "gtceu.green_house": "Greenhouse",
@@ -154,6 +155,7 @@
     "gtceu.multiblock.hp_pyrolyse_oven.tooltip.0": "An overwhelming efficiency advantage",
     "gtceu.multiblock.large_heat_exchanger.tooltip.0": "Legends Return through the Ages",
     "gtceu.multiblock.large_heat_exchanger.tooltip.1": "Used for heat exchange with hot liquids. Can also be used with plasma.",
+    "gtceu.multiblock.oversailing_fusion_reactor.description": "で、デカすぎる…。",
     "gtceu.backported_gt5u.tooltip": "“Go home, GT5u”? Don't you feel any romance in this machine?",
     "__COMMENT__GTCEU_END_OF_FILE__": "END OF FILE, It's Dummy Translate"
 }

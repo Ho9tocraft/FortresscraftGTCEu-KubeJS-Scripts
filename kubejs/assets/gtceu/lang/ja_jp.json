@@ -124,6 +124,7 @@
     "block.gtceu.hp_steam_large_turbine": "高圧蒸気タービン",
     "block.gtceu.large_heat_exchanger": "大型熱交換器",
     "block.gtceu.modern_green_house": "自動農場（グリーンハウス）",
+    "block.gtceu.oversailing_fusion_reactor": "過剰燃焼型核融合炉 (OFR)",
     "__MATERIAL__GTCEU_ADDITION__.article.2b": "## Machines/Recipe Type",
     "gtceu.fission_reactor": "加圧水型原子炉（PWR）",
     "gtceu.green_house": "モダン・グリーンハウス",
@@ -154,6 +155,7 @@
     "gtceu.multiblock.hp_pyrolyse_oven.tooltip.0": "圧倒的な効率のアドバンテージ",
     "gtceu.multiblock.large_heat_exchanger.tooltip.0": "伝説再臨",
     "gtceu.multiblock.large_heat_exchanger.tooltip.1": "熱い液体との熱交換に使用する。プラズマも可。",
+    "gtceu.multiblock.oversailing_fusion_reactor.description": "で、デカすぎる…。",
     "gtceu.backported_gt5u.tooltip": "GT5uは帰れ、って？オマエはこの機械にロマンを感じないのか。",
     "__COMMENT__GTCEU_END_OF_FILE__": "END OF FILE, It's Dummy Translate"
 }

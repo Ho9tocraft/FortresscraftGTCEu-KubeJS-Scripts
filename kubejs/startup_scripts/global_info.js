@@ -17,11 +17,14 @@ global.loadingStartupClasses = {
 };
 
 global.FGTCEuAddedRecipeType = {
+  DutySimulator: 'duty_simulator',
+  FGTCEuGreenhouse: 'green_house',
   FissionReactor: 'fission_reactor',
   HighPowerPyrolyseOven: 'hp_pyrolyse_oven',
   HighPressureSteamTurbine: 'hp_steam_turbine',
   LargeHeatExchanger: 'large_heat_exchanger',
-  FGTCEuGreenhouse: 'green_house',
+  NeuralnetMSCCalc: 'neuralnet_mob_simulation_computer_calc',
+  NeuralnetMSCFab: 'neuralnet_mob_simulation_computer_fab',
 };
 
 global.FGTCEuCommonStartupFunctions = {
@@ -72,7 +75,7 @@ global.FGTCEuCommonStartupFunctions = {
      * @param {$GTRecipe} recipe 
      * @returns 
      */
-    ExtendedLargeTurbineModifier (machine, recipe) {
+    ExtendedLargeTurbineModifier(machine, recipe) {
       const {
         $GTRecipe: GTRecipe,
         $LargeTurbineMachine: LargeTurbineMachine,
@@ -94,7 +97,7 @@ global.FGTCEuCommonStartupFunctions = {
      * @param {$MetaMachine} machine 
      * @param {$GTRecipe} recipe 
      */
-    HeatExchangerModifier (machine, recipe) {
+    HeatExchangerModifier(machine, recipe) {
       return ModifierFunction.IDENTITY;
     },
     /**
@@ -102,7 +105,7 @@ global.FGTCEuCommonStartupFunctions = {
      * @param {$MetaMachine} machine 
      * @param {$GTRecipe} recipe 
      */
-    OversailingFusionReactorModifier (machine, recipe) {
+    OversailingFusionReactorModifier(machine, recipe) {
       const {
         $FusionReactorMachine: FusionReactorMachine,
         $GTRecipe: GTRecipe,
@@ -112,6 +115,12 @@ global.FGTCEuCommonStartupFunctions = {
       if (!(machine instanceof MetaMachine) || !(recipe instanceof GTRecipe)) return ModifierFunction.NULL;
       if (!(machine instanceof FusionReactorMachine)) {
         return RecipeMod.nullWrongType(FusionReactorMachine, machine);
+      }
+      else {
+        return ModifierFunction.builder()
+          .eutMultiplier(0.95)
+          .durationMultiplier(0.8)
+          .build();
       }
     },
   },

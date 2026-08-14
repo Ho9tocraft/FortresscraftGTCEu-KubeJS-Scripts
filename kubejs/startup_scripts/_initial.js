@@ -18,8 +18,7 @@ Platform.setModName('kubejs', 'Fortresscraft GTCEu'); // Mod Name
 
 /* ---- Mod Integrations ---- */
 global.loadedMods = {
-  GT_COMMUNITY_ADDITIONS: Platform.isLoaded('gtca'),
-  HOSTILE_NEURAL_NETWORKS: Platform.isLoaded('hostilenetworks'), // Hostile Neural Networks
+  GT_COMMUNITY_ADDITIONS: Platform.isLoaded('gtca'), // GT Community Additions
   SHISHAMO_TECH: Platform.isLoaded('shishamo_tech'), // Shishamo Tech
 };
 
