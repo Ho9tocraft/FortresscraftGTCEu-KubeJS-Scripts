@@ -14,7 +14,8 @@ const fluidResource = {
   Europium: 'gtceu:europium',
   Gallium: 'gtceu:gallium',
   Nickel: 'gtceu:nickel',
-  Thorium: 'gtceu:thorium'
+  Thorium: 'gtceu:thorium',
+  Duranium: 'gtceu:duranium'
 };
 
 /**
@@ -66,7 +67,7 @@ ServerEvents.recipes(event => {
   // Arrokothium
   GTFusionReactor('fusion_arrokothium',
     MacroFluidStats(fluidResource.Ascendium, 1296),
-    MacroFluidStats(fluidResource.LunarAdamantium, 144),
+    MacroFluidStats(fluidResource.Duranium, 144),
     MacroFluidStats(fluidResource.Arrokothium, 16),
     200, 524288, 196000000);
   // Excerium Plasma
