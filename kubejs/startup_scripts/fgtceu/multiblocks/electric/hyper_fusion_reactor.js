@@ -6,6 +6,7 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
   const RecipeFReactor = 'fusion_reactor';
   const { outTranslatableString } = global.FGTCEuCommonStartupFunctions;
   const { OversailingFusionReactorModifier } = global.FGTCEuCommonStartupFunctions.FGTCEuMachineMods;
+  const { Casings, Controllers } = global.FGTCEuResLocCode.GTCEu;
   const { $FusionReactorMachine: FusionReactorMachine } = global.loadingStartupClasses.GTCEu;
 
   event.create('oversailing_fusion_reactor', 'multiblock')
@@ -56,12 +57,13 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .where('#', Predicates.air())
       .where(' ', Predicates.any())
       .build())
-    .workableCasingModel(GTCEu.id('block/casings/fusion/fusion_casing_mk3'),
-      GTCEu.id('block/multiblock/fusion_reactor'))
-  ['tooltips(net.minecraft.network.chat.Component[])']([
-    Component.translatable('gtceu.machine.fusion_reactor.capacity',
-      FusionReactorMachine.calculateEnergyStorageFactor(GTValues.OpV, 16) / 1000000),
-    Component.translatable('gtceu.machine.fusion_reactor.overclocking'),
-    Component.translatable('gtceu.multiblock.oversailing_fusion_reactor.description')
-  ]);
+    .workableCasingModel(
+      GTCEu.id(Casings.FusionCasingMk3),
+      GTCEu.id(Controllers.FusionReactor)
+    )['tooltips(net.minecraft.network.chat.Component[])']([
+      Component.translatable('gtceu.machine.fusion_reactor.capacity',
+        FusionReactorMachine.calculateEnergyStorageFactor(GTValues.OpV, 16) / 1000000),
+      Component.translatable('gtceu.machine.fusion_reactor.overclocking'),
+      Component.translatable('gtceu.multiblock.oversailing_fusion_reactor.description')
+    ]);
 });

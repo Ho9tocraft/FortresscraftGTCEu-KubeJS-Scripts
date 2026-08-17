@@ -19,6 +19,7 @@ GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
 GTCEuStartupEvents.registry('gtceu:machine', event => {
   const { FGTCEuGreenhouse: GHouse } = global.FGTCEuAddedRecipeType;
   const { outTranslatableString } = global.FGTCEuCommonStartupFunctions;
+  const { Casings, Controllers } = global.FGTCEuResLocCode.GTCEu;
 
   event.create('modern_green_house', 'multiblock')
     .rotationState(RotationState.NON_Y_AXIS)
@@ -44,10 +45,11 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .where('a', Predicates.air())
       .where('0', Predicates.any())
       .build())
-    .workableCasingModel('gtceu:block/casings/solid/machine_casing_solid_steel',
-      'gtceu:block/multiblock/generator/large_steam_turbine')
-  ['tooltips(net.minecraft.network.chat.Component[])']([
-    Component.translatable(outTranslatableString('gtceu', 'multiblock.green_house', 0)),
-    Component.translatable(outTranslatableString('gtceu', 'multiblock.green_house', 1))
-  ]);
+    .workableCasingModel(
+      GTCEu.id(Casings.SolidSteel),
+      GTCEu.id(Controllers.LargeSteamTurbine)
+    )['tooltips(net.minecraft.network.chat.Component[])']([
+      Component.translatable(outTranslatableString('gtceu', 'multiblock.green_house', 0)),
+      Component.translatable(outTranslatableString('gtceu', 'multiblock.green_house', 1))
+    ]);
 });

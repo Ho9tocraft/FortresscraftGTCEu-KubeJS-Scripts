@@ -13,7 +13,7 @@ ServerEvents.recipes((event) => {
     plasma_generator: PlasmaTurbineGenerator,
     steam_turbine: SteamTurbineGenerator,
   } = recipes.gtceu;
-  const { V, LV, EV, UV } = GTValues;
+  const { V, LV, HV, EV, UV } = GTValues;
   const coolant = {
     ReactorCoolant: 'coolant',
     HDReactorCoolant: 'high_density_coolant',
@@ -31,13 +31,16 @@ ServerEvents.recipes((event) => {
       superheated_steam: {
         inFluid: 'gtceu:superheated_steam 48',
         outFluid: 'gtceu:steam 640',
-        duration: 25,
+        coolantValue: undefined,
+        duration: 10,
         outEUt: EV
       },
     },
     gas: {
       zurvanised_nitrobenzene: {
         inFluid: 'gtceu:zurvanised_nitrobenzene 1',
+        outFluid: undefined,
+        coolantValue: undefined,
         duration: 200,
         outEUt: LV
       },
@@ -46,13 +49,15 @@ ServerEvents.recipes((event) => {
       ascendium: {
         inFluid: 'gtceu:ascendium_plasma 1',
         outFluid: 'gtceu:ascendium 1',
-        duration: 1200,
+        duration: 900,
+        coolantValue: 480,
         outEUt: EV
       },
       excerium: {
         inFluid: 'gtceu:excerium_plasma 1',
         outFluid: 'gtceu:excerium 1',
         duration: 1200,
+        coolantValue: 640,
         outEUt: UV
       },
     },
@@ -89,26 +94,42 @@ ServerEvents.recipes((event) => {
       .EUt(-V[outEUt]);
   });
   // Plasma Turbine & Large Heat Exchanger (Plasma Section)
-  const defaultPlasmas = ['helium', 'oxygen', 'nitrogen', 'argon', 'iron', 'tin', 'nickel', 'americium'];
+  const defaultPlasmas = [
+    'helium', 'oxygen', 'nitrogen', 'argon',
+    'iron', 'tin', 'nickel', 'americium'
+  ];
+  /**
+   * @param {string} fuel 
+   * @returns {number}
+   */
+  const calcCoolantHeatValueSample = (fuel) => {
+    const samples = {
+      helium: 40,
+      oxygen: 48,
+      nitrogen: 64,
+      argon: 96,
+      iron: 112,
+      tin: 128,
+      nickel: 192,
+      americium: 320,
+    };
+    return !(fuel in samples) ? samples[fuel] : 0;
+  };
   defaultPlasmas.concat(Object.keys(FuelConds.plasma)).forEach((fuel) => {
     if (!fuel) return; // 空文字スキップ
     const coolantHeatingValue = 400 * (
-      fuel === 'helium' ? 40 :
-        fuel === 'oxygen' ? 48 :
-          fuel === 'nitrogen' ? 64 :
-            fuel === 'argon' ? 96 :
-              fuel === 'iron' ? 112 :
-                fuel === 'tin' ? 128 :
-                  fuel === 'nickel' ? 192 :
-                    fuel === 'americium' ? 320 :
-                      fuel in FuelConds.plasma ?
-                        FuelConds.plasma[fuel].duration * (5 + Math.max((FuelConds.plasma[fuel].outEUt - EV), 0)) : 0);
+      fuel in FuelConds.plasma ?
+        (typeof FuelConds.plasma[fuel].coolantValue === 'number' ?
+          FuelConds.plasma[fuel].coolantValue : 320)
+        : calcCoolantHeatValueSample(fuel));
     if (coolantHeatingValue === 0) return; // coolantHeatingValue = 0
     // Large Heat Exchanger (Plasma Section)
     LargeHeatExchanger(`plasma_cooling_${fuel}`)
-      .inputFluids(`gtceu:${fuel}_plasma 1000`, `kubejs:${coolant.HDReactorCoolant} ${coolantHeatingValue}`)
-      .outputFluids(`gtceu:${fuel} 1000`, `kubejs:hot_${coolant.HDReactorCoolant} ${coolantHeatingValue}`)
-      .duration(1); // 1t
+      .inputFluids(`gtceu:${fuel}_plasma 1000`,
+        `kubejs:${coolant.HDReactorCoolant} ${coolantHeatingValue}`)
+      .outputFluids(`gtceu:${fuel} 1000`,
+        `kubejs:hot_${coolant.HDReactorCoolant} ${coolantHeatingValue}`)
+      .duration(1); // 1 tick
     // Plasma Turbine
     if (!(fuel in FuelConds.plasma)) return; // 無要素スキップ
     const { inFluid, outFluid, duration, outEUt } = FuelConds.plasma[fuel];
@@ -121,7 +142,7 @@ ServerEvents.recipes((event) => {
 
   /* ---- 熱交換 ---- */
   const excRateHDRCtoLDRC = 100;
-  const excRateLDRCtoWater = 960;
+  const excRateLDRCtoWater = 120;
   const coolingRate = 4000;
   // Hi → Lo
   LargeHeatExchanger('exchange_high_density_to_low_density')
@@ -129,7 +150,7 @@ ServerEvents.recipes((event) => {
       `kubejs:${coolant.ReactorCoolant} ${coolingRate * excRateHDRCtoLDRC}`)
     .outputFluids(`kubejs:${coolant.HDReactorCoolant} ${coolingRate}`,
       `kubejs:hot_${coolant.ReactorCoolant} ${coolingRate * excRateHDRCtoLDRC}`)
-    .duration(1);
+    .duration(400);
   // Lo → 蒸気
   LargeHeatExchanger('exchange_low_density_to_steam')
     .inputFluids(`kubejs:hot_${coolant.ReactorCoolant} ${coolingRate}`,

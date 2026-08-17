@@ -1,9 +1,12 @@
+//priority: 10
 //requires: gtceu
 
 global.loadingStartupClasses = {
   $JavaBool: Java.loadClass('java.lang.Boolean'),
   GTCEu: {
+    // Class
     $CoilWorkableEMBMachine: Java.loadClass('com.gregtechceu.gtceu.api.machine.multiblock.CoilWorkableElectricMultiblockMachine'),
+    $ContentModifier: Java.loadClass('com.gregtechceu.gtceu.api.recipe.content.ContentModifier'),
     $FusionReactorMachine: Java.loadClass('com.gregtechceu.gtceu.common.machine.multiblock.electric.FusionReactorMachine'),
     $GTRecipe: Java.loadClass('com.gregtechceu.gtceu.api.recipe.GTRecipe'),
     $IO: Java.loadClass('com.gregtechceu.gtceu.api.capability.recipe.IO'),
@@ -11,8 +14,44 @@ global.loadingStartupClasses = {
     $MachineModelProp: Java.loadClass('com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties'),
     $MetaMachine: Java.loadClass('com.gregtechceu.gtceu.api.machine.MetaMachine'),
     $ParallelHatchPart: Java.loadClass('com.gregtechceu.gtceu.common.machine.multiblock.part.ParallelHatchPartMachine'),
+    $ParallelLogic: Java.loadClass('com.gregtechceu.gtceu.api.recipe.modifier.ParallelLogic'),
     $RecipeLogic: Java.loadClass('com.gregtechceu.gtceu.api.machine.trait.RecipeLogic'),
     $RecipeModifier: Java.loadClass('com.gregtechceu.gtceu.api.recipe.modifier.RecipeModifier'),
+    // Interface
+    $IMultiController: Java.loadClass('com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiController'),
+  },
+  MC: {
+    $ResourceLocation: Java.loadClass('net.minecraft.resources.ResourceLocation'),
+  },
+};
+
+/* FGTCEu Resource Locations */
+global.FGTCEuResLocCode = {
+  /**
+   * @desc GTCEu Casings/Controllers Path
+   */
+  GTCEu: {
+    Casings: {
+      FusionCasingMk3: 'block/casings/fusion/fusion_casing_mk3',
+      LargeScaleAssembling: 'block/casings/gcym/large_scale_assembling_casing',
+      SolidSteel: 'block/casings/solid/machine_casing_solid_steel',
+      StableTitanium: 'block/casings/solid/machine_casing_stable_titanium',
+      SturdyHSSE: 'block/casings/solid/machine_casing_sturdy_hsse',
+      TurbineStainlessSteel: 'block/casings/mechanic/machine_casing_turbine_stainless_steel',
+      TurbineSteel: 'block/casings/mechanic/machine_casing_turbine_steel',
+      TurbineTitanium: 'block/casings/mechanic/machine_casing_turbine_titanium',
+      TurbineTungstensteel: 'block/casings/mechanic/machine_casing_turbine_tungstensteel',
+    },
+    Controllers: {
+      FusionReactor: 'block/multiblock/fusion_reactor',
+      ImplosionCompressor: 'block/multiblock/implosion_compressor',
+      LargeAssembler: 'block/multiblock/gcym/large_assembler',
+      LargeGasTurbine: 'block/multiblock/generator/large_steam_turbine',
+      LargePlasmaTurbine: 'block/multiblock/generator/large_plasma_turbine',
+      LargeSteamTurbine: 'block/multiblock/generator/large_gas_turbine',
+      PyrolyseOven: 'block/multiblock/pyrolyse_oven',
+      ResearchStation: 'block/multiblock/research_station',
+    },
   },
 };
 
@@ -98,6 +137,24 @@ global.FGTCEuCommonStartupFunctions = {
      * @param {$GTRecipe} recipe 
      */
     HeatExchangerModifier(machine, recipe) {
+      const {
+        $ContentModifier: ContentModifier,
+        $ParallelLogic: ParallelLogic,
+        $GTRecipe: GTRecipe,
+        $IMultiController: IMultiController,
+      } = global.loadingStartupClasses.GTCEu;
+      if (recipe instanceof GTRecipe && recipe.getId() !== null &&
+          !/plasma_cooling/.test(recipe.getId().getPath())) {
+        // Max Parallel
+        const xParallel = 65536;
+        // Current Parallel
+        const cParallel = ParallelLogic.getParallelAmount(machine, recipe, xParallel);
+        return ModifierFunction.builder()
+          .modifyAllContents(ContentModifier.multiplier(cParallel))
+          .parallels(cParallel)
+          .build();
+      }
+
       return ModifierFunction.IDENTITY;
     },
     /**

@@ -2,6 +2,7 @@
 GTCEuStartupEvents.registry('gtceu:machine', event => {
   const { loadedMods, packFeatures, FGTCEuCommonStartupFunctions } = global;
   const { outTranslatableString } = FGTCEuCommonStartupFunctions;
+  const { Casings, Controllers } = global.FGTCEuResLocCode.GTCEu;
   // ShishamoTech導入状況時
   if (!loadedMods.SHISHAMO_TECH || packFeatures.bypassSTDisable) {
     // Full-faithial Parallel Rapid Assembly Line
@@ -17,21 +18,21 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       ])
       .appearanceBlock(GCYMBlocks.CASING_LARGE_SCALE_ASSEMBLING)
       .pattern(definition => FactoryBlockPattern.start()
-        .aisle('nnHHHnn','nHHHHHn','HHHHHHH','HHHHHHH','HHHHHHH','nHHHHHn','nnHHHnn')
-        .aisle('nCHHHCn','CChPhCC','Hh G hH','Hh   hH','Hh R hH','CCGMGCC','nCHHHCn')
-        .aisle('nnHHHnn','nvhPhvn','Hh G hH','L     L','Hh R hH','nvGMGvn','nnHHHnn')
-        .aisle('nCHHHCn','CChPhCC','Hh G hH','L     L','Hh R hH','ChGMGhC','nCHHHCn')
-        .aisle('nnHHHnn','nHhPhHn','Hh G hH','L     L','H  R  H','nhGMGhn','nnHHHnn')
-        .aisle('nnHHHnn','nHhPhHn','Hh G hH','L     L','H  R  H','nhGMGhn','nnHHHnn')
-        .aisle('nnHHHnn','nHhPhHn','Hh G hH','L     L','H  R  H','nhGMGhn','nnHHHnn')
-        .aisle('nnHHHnn','nHhPhHn','Hh G hH','L     L','H  R  H','nhGMGhn','nnHHHnn')
-        .aisle('nnHHHnn','nHhPhHn','Hh G hH','L     L','H  R  H','nhGMGhn','nnHHHnn')
-        .aisle('nCHHHCn','CChPhCC','Hh G hH','L     L','Hh R hH','ChGMGhC','nCHHHCn')
-        .aisle('nnHHHnn','nVhPhVn','Hh G hH','L     L','Hh R hH','nVGMGVn','nnHHHnn')
-        .aisle('nCHHHCn','CChPhCC','HhhGhhH','L     L','HhhRhhH','CCGMGCC','nCHHHCn')
-        .aisle('nnHHHnn','nCCCCCn','HChhhCH','HCLLLCH','HCCRCCH','nCCCCCn','nnHHHnn')
-        .aisle('nnnGnnn','nnGCGnn','nGCCCGn','GCWWWCG','nGCRCGn','nnGCGnn','nnnGnnn')
-        .aisle('nnnnnnn','nnGGGnn','nGCCCGn','nGC@CGn','nGCCCGn','nnGGGnn','nnnnnnn')
+        .aisle('nnHHHnn', 'nHHHHHn', 'HHHHHHH', 'HHHHHHH', 'HHHHHHH', 'nHHHHHn', 'nnHHHnn')
+        .aisle('nCHHHCn', 'CChPhCC', 'Hh G hH', 'Hh   hH', 'Hh R hH', 'CCGMGCC', 'nCHHHCn')
+        .aisle('nnHHHnn', 'nvhPhvn', 'Hh G hH', 'L     L', 'Hh R hH', 'nvGMGvn', 'nnHHHnn')
+        .aisle('nCHHHCn', 'CChPhCC', 'Hh G hH', 'L     L', 'Hh R hH', 'ChGMGhC', 'nCHHHCn')
+        .aisle('nnHHHnn', 'nHhPhHn', 'Hh G hH', 'L     L', 'H  R  H', 'nhGMGhn', 'nnHHHnn')
+        .aisle('nnHHHnn', 'nHhPhHn', 'Hh G hH', 'L     L', 'H  R  H', 'nhGMGhn', 'nnHHHnn')
+        .aisle('nnHHHnn', 'nHhPhHn', 'Hh G hH', 'L     L', 'H  R  H', 'nhGMGhn', 'nnHHHnn')
+        .aisle('nnHHHnn', 'nHhPhHn', 'Hh G hH', 'L     L', 'H  R  H', 'nhGMGhn', 'nnHHHnn')
+        .aisle('nnHHHnn', 'nHhPhHn', 'Hh G hH', 'L     L', 'H  R  H', 'nhGMGhn', 'nnHHHnn')
+        .aisle('nCHHHCn', 'CChPhCC', 'Hh G hH', 'L     L', 'Hh R hH', 'ChGMGhC', 'nCHHHCn')
+        .aisle('nnHHHnn', 'nVhPhVn', 'Hh G hH', 'L     L', 'Hh R hH', 'nVGMGVn', 'nnHHHnn')
+        .aisle('nCHHHCn', 'CChPhCC', 'HhhGhhH', 'L     L', 'HhhRhhH', 'CCGMGCC', 'nCHHHCn')
+        .aisle('nnHHHnn', 'nCCCCCn', 'HChhhCH', 'HCLLLCH', 'HCCRCCH', 'nCCCCCn', 'nnHHHnn')
+        .aisle('nnnGnnn', 'nnGCGnn', 'nGCCCGn', 'GCWWWCG', 'nGCRCGn', 'nnGCGnn', 'nnnGnnn')
+        .aisle('nnnnnnn', 'nnGGGnn', 'nGCCCGn', 'nGC@CGn', 'nGCCCGn', 'nnGGGnn', 'nnnnnnn')
         .where('@', Predicates.controller(Predicates.blocks(definition.get()))) // コントローラー本体
         .where('H', Predicates.blocks(GCYMBlocks.CASING_LARGE_SCALE_ASSEMBLING.get())
           .or(Predicates.abilities(PartAbility.MAINTENANCE).setExactLimit(1)) // メンテ
@@ -55,19 +56,20 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
         .where('n', Predicates.any())
         .where(' ', Predicates.air())
         .build())
-      .workableCasingModel(GTCEu.id('block/casings/gcym/large_scale_assembling_casing'),
-        GTCEu.id('block/multiblock/gcym/large_assembler'))
-    ['tooltips(net.minecraft.network.chat.Component[])']([
-      Component.translatable(outTranslatableString('gtceu', 'machine.available_recipe_map_1'),
-        Component.translatable('gtceu.assembler'), Component.translatable('gtceu.circuit_assembler'),
-        Component.translatable('gtceu.assembly_line')),
-      Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 0)),
-      Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 1)),
-      Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 2)),
-      Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 3)),
-      Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 4)),
-      Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 5)),
-      Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 6)),
-    ]);
+      .workableCasingModel(
+        GTCEu.id(Casings.LargeScaleAssembling),
+        GTCEu.id(Controllers.LargeAssembler)
+      )['tooltips(net.minecraft.network.chat.Component[])']([
+        Component.translatable(outTranslatableString('gtceu', 'machine.available_recipe_map_1'),
+          Component.translatable('gtceu.assembler'), Component.translatable('gtceu.circuit_assembler'),
+          Component.translatable('gtceu.assembly_line')),
+        Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 0)),
+        Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 1)),
+        Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 2)),
+        Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 3)),
+        Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 4)),
+        Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 5)),
+        Component.translatable(outTranslatableString('gtceu', 'multiblock.ffaithial_prpd_assembly_line', 6)),
+      ]);
   }
 });

@@ -18,6 +18,7 @@ GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
 GTCEuStartupEvents.registry('gtceu:machine', event => {
   const { FissionReactor } = global.FGTCEuAddedRecipeType;
   const { outTranslatableString } = global.FGTCEuCommonStartupFunctions;
+  const { Casings, Controllers } = global.FGTCEuResLocCode.GTCEu;
 
   event.create('fission_reactor', 'multiblock')
     .rotationState(RotationState.NON_Y_AXIS)
@@ -49,10 +50,12 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .where('a', Predicates.any())
       .where(' ', Predicates.air())
       .build())
-    .workableCasingModel('gtceu:block/casings/solid/machine_casing_stable_titanium', 'gtceu:block/multiblock/implosion_compressor')
-  ['tooltips(net.minecraft.network.chat.Component[])']([
-    Component.translatable(outTranslatableString('gtceu', 'machine.fission_reactor', 0)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.fission_reactor', 1)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.fission_reactor', 2))
-  ]);
+    .workableCasingModel(
+      GTCEu.id(Casings.StableTitanium),
+      GTCEu.id(Controllers.ImplosionCompressor)
+    )['tooltips(net.minecraft.network.chat.Component[])']([
+      Component.translatable(outTranslatableString('gtceu', 'machine.fission_reactor', 0)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.fission_reactor', 1)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.fission_reactor', 2))
+    ]);
 });

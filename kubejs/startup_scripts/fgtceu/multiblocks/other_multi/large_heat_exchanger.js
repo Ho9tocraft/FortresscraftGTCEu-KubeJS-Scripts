@@ -19,6 +19,7 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
   const { LargeHeatExchanger } = global.FGTCEuAddedRecipeType;
   const { outTranslatableString } = global.FGTCEuCommonStartupFunctions;
   const { HeatExchangerModifier } = global.FGTCEuCommonStartupFunctions.FGTCEuMachineMods;
+  const { Casings, Controllers } = global.FGTCEuResLocCode.GTCEu;
 
   event.create('large_heat_exchanger', 'multiblock')
     .rotationState(RotationState.NON_Y_AXIS)
@@ -49,10 +50,12 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .where('A', Predicates.any())
       .where(' ', Predicates.air())
       .build())
-    .workableCasingModel('gtceu:block/casings/solid/machine_casing_stable_titanium', 'gtceu:block/multiblock/implosion_compressor')
-  ['tooltips(net.minecraft.network.chat.Component[])']([
-    Component.translatable(outTranslatableString('gtceu', 'multiblock.large_heat_exchanger', 0)),
-    Component.translatable(outTranslatableString('gtceu', 'multiblock.large_heat_exchanger', 1)),
-    Component.translatable(outTranslatableString('gtceu', 'shutup_gt5u'))
-  ]);
+    .workableCasingModel(
+      GTCEu.id(Casings.StableTitanium),
+      GTCEu.id(Controllers.ImplosionCompressor)
+    )['tooltips(net.minecraft.network.chat.Component[])']([
+      Component.translatable(outTranslatableString('gtceu', 'multiblock.large_heat_exchanger', 0)),
+      Component.translatable(outTranslatableString('gtceu', 'multiblock.large_heat_exchanger', 1)),
+      Component.translatable(outTranslatableString('gtceu', 'shutup_gt5u'))
+    ]);
 });

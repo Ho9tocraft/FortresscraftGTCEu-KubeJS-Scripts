@@ -20,6 +20,7 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
   const { HighPressureSteamTurbine } = global.FGTCEuAddedRecipeType;
   const { outTranslatableString } = global.FGTCEuCommonStartupFunctions;
   const { ExtendedLargeTurbineModifier } = global.FGTCEuCommonStartupFunctions.FGTCEuMachineMods;
+  const { Casings, Controllers } = global.FGTCEuResLocCode.GTCEu;
   const { $LargeTurbineMachine: LargeTurbineMachine } = global.loadingStartupClasses.GTCEu;
   const SteamTurbine = 'steam_turbine';
   const GasTurbine = 'gas_turbine';
@@ -48,14 +49,16 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
         .or(Predicates.autoAbilities(definition.getRecipeTypes()))
         .or(Predicates.abilities(PartAbility.MAINTENANCE).setExactLimit(1)))
       .build())
-    .workableCasingModel('gtceu:block/casings/mechanic/machine_casing_turbine_titanium', 'gtceu:block/multiblock/generator/large_steam_turbine')
-  ['tooltips(net.minecraft.network.chat.Component[])']([
-    Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.EV] * 2),
-    Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.EV]),
-    Component.translatable(outTranslatableString('gtceu', 'machine.hp_steam_turbine', 0)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.hp_steam_turbine', 1)),
-    Component.translatable(outTranslatableString('gtceu', 'shutup_gt5u'))
-  ]);
+    .workableCasingModel(
+      GTCEu.id(Casings.TurbineTitanium),
+      GTCEu.id(Controllers.LargeSteamTurbine)
+    )['tooltips(net.minecraft.network.chat.Component[])']([
+      Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.EV] * 2),
+      Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.EV]),
+      Component.translatable(outTranslatableString('gtceu', 'machine.hp_steam_turbine', 0)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.hp_steam_turbine', 1)),
+      Component.translatable(outTranslatableString('gtceu', 'shutup_gt5u'))
+    ]);
 
   /**
    * 拡張型蒸気タービン (Extended Large Steam Turbine Generator)
@@ -94,15 +97,16 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .where('Z', Predicates.blocks(GTBlocks.CASING_EXTREME_ENGINE_INTAKE.get()))
       .where(' ', Predicates.any())
       .build())
-    .workableCasingModel(GTCEu.id('block/casings/mechanic/machine_casing_turbine_steel'),
-      GTCEu.id('block/multiblock/generator/large_steam_turbine'))
-  ['tooltips(net.minecraft.network.chat.Component[])']([
-    Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.LuV] * 2),
-    Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.LuV]),
-    Component.translatable(outTranslatableString('gtceu', `machine.extended_steam_large_turbine`)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
-  ]);
+    .workableCasingModel(
+      GTCEu.id(Casings.TurbineSteel),
+      GTCEu.id(Controllers.LargeSteamTurbine)
+    )['tooltips(net.minecraft.network.chat.Component[])']([
+      Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.LuV] * 2),
+      Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.LuV]),
+      Component.translatable(outTranslatableString('gtceu', `machine.extended_steam_large_turbine`)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
+    ]);
   /**
    * 拡張型高圧蒸気タービン (Extended Large High Pressure Steam Turbine Generator)
    */
@@ -140,15 +144,16 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .where('Z', Predicates.blocks(GTBlocks.CASING_EXTREME_ENGINE_INTAKE.get()))
       .where(' ', Predicates.any())
       .build())
-    .workableCasingModel(GTCEu.id('block/casings/mechanic/machine_casing_turbine_titanium'),
-      GTCEu.id('block/multiblock/generator/large_steam_turbine'))
-  ['tooltips(net.minecraft.network.chat.Component[])']([
-    Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.ZPM] * 2),
-    Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.ZPM]),
-    Component.translatable(outTranslatableString('gtceu', `machine.extended_steam_large_turbine`)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
-  ]);
+    .workableCasingModel(
+      GTCEu.id(Casings.TurbineTitanium),
+      GTCEu.id(Controllers.LargeSteamTurbine)
+    )['tooltips(net.minecraft.network.chat.Component[])']([
+      Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.ZPM] * 2),
+      Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.ZPM]),
+      Component.translatable(outTranslatableString('gtceu', `machine.extended_steam_large_turbine`)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
+    ]);
   /**
    * 拡張型ガスタービン (Extended Large Gas Turbine Generator)
    */
@@ -187,15 +192,16 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .where('Z', Predicates.blocks(GTBlocks.CASING_EXTREME_ENGINE_INTAKE.get()))
       .where(' ', Predicates.any())
       .build())
-    .workableCasingModel(GTCEu.id('block/casings/mechanic/machine_casing_turbine_stainless_steel'),
-      GTCEu.id('block/multiblock/generator/large_gas_turbine'))
-  ['tooltips(net.minecraft.network.chat.Component[])']([
-    Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.ZPM] * 2),
-    Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.ZPM]),
-    Component.translatable(outTranslatableString('gtceu', `machine.extended_gas_large_turbine`)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
-  ]);
+    .workableCasingModel(
+      GTCEu.id(Casings.TurbineStainlessSteel),
+      GTCEu.id(Controllers.LargeGasTurbine)
+    )['tooltips(net.minecraft.network.chat.Component[])']([
+      Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.ZPM] * 2),
+      Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.ZPM]),
+      Component.translatable(outTranslatableString('gtceu', `machine.extended_gas_large_turbine`)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
+    ]);
   /**
    * 拡張型プラズマタービン (Extended Large Plasma Turbine Generator)
    */
@@ -233,13 +239,14 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .where('Z', Predicates.blocks(GTBlocks.CASING_EXTREME_ENGINE_INTAKE.get()))
       .where(' ', Predicates.any())
       .build())
-    .workableCasingModel(GTCEu.id('block/casings/mechanic/machine_casing_turbine_tungstensteel'),
-      GTCEu.id('block/multiblock/generator/large_plasma_turbine'))
-  ['tooltips(net.minecraft.network.chat.Component[])']([
-    Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.UV] * 2),
-    Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.UV]),
-    Component.translatable(outTranslatableString('gtceu', `machine.extended_plasma_large_turbine`)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
-    Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
-  ]);
+    .workableCasingModel(
+      GTCEu.id(Casings.TurbineTungstensteel),
+      GTCEu.id(Controllers.LargePlasmaTurbine)
+    )['tooltips(net.minecraft.network.chat.Component[])']([
+      Component.translatable(outTranslatableString('gtceu', 'universal.tooltip.base_production_eut'), GTValues.V[GTValues.UV] * 2),
+      Component.translatable(outTranslatableString('gtceu', 'multiblock.turbine.efficiency_tooltip'), GTValues.VNF[GTValues.UV]),
+      Component.translatable(outTranslatableString('gtceu', `machine.extended_plasma_large_turbine`)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 0)),
+      Component.translatable(outTranslatableString('gtceu', 'machine.extended_large_turbine', 1))
+    ]);
 });

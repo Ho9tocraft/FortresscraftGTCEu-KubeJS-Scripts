@@ -18,6 +18,7 @@ GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
 GTCEuStartupEvents.registry('gtceu:machine', event => {
   const { HighPowerPyrolyseOven } = global.FGTCEuAddedRecipeType;
   const { outTranslatableString } = global.FGTCEuCommonStartupFunctions;
+  const { Casings, Controllers } = global.FGTCEuResLocCode.GTCEu;
   const { $CoilWorkableEMBMachine: CoilWorkableElectricMultiblockMachine } = global.loadingStartupClasses.GTCEu;
 
   event.create('high_power_pyrolyse_oven', 'multiblock')
@@ -45,8 +46,9 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
       .where('M', Predicates.abilities(PartAbility.MUFFLER).setExactLimit(1))
       .where(' ', Predicates.air())
       .build())
-    .workableCasingModel('gtceu:block/casings/solid/machine_casing_solid_steel',
-      'gtceu:block/multiblock/pyrolyse_oven')
+    .workableCasingModel(
+      GTCEu.id(Casings.SolidSteel),
+      GTCEu.id(Controllers.PyrolyseOven))
     .additionalDisplay((controller, components) => {
       if (controller instanceof CoilWorkableElectricMultiblockMachine && controller.isFormed()) {
         components.add(Component.translatable('gtceu.multiblock.pyrolyse_oven.speed',
