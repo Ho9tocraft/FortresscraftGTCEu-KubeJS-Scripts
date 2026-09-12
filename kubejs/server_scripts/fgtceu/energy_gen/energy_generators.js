@@ -160,11 +160,30 @@ ServerEvents.recipes((event) => {
     .duration(1);
 
   /* ---- Fuels Generating ---- */
-  // TODO: 10％の確率で鬼神の甲殻片消費する燃料を作成する
   LargeChemicalReactor('zurvanised_nitrobenzene')
     .chancedInput('kubejs:zurvanite_carapace_fragment', 1000, 0)
     .inputFluids('gtceu:nitrobenzene 1000', 'gtceu:phosphoric_acid 1000', 'gtceu:mana 3000')
     .outputFluids('gtceu:zurvanised_nitrobenzene 4000', 'gtceu:nitration_mixture 1000')
     .duration(160)
     .EUt(GTValues.VHA[GTValues.EV]);
+  
+  /* ---- 蒸留水のAltレシピ ---- */
+  LargeChemicalReactor('distilled_water_alt')
+    .inputFluids('gtceu:hydrogen 4000', 'gtceu:oxygen 2000')
+    .outputFluids('gtceu:distilled_water 4000')
+    .duration(10)
+    .EUt(GTValues.VHA[GTValues.EV]);
+  /* ---- 水を濾過して蒸留水にする ---- */
+  LargeChemicalReactor('water_filtering_from_dust')
+    .itemInputs('1x gtceu:small_carbon_dust')
+    .inputFluids('minecraft:water 1000')
+    .outputFluids('gtceu:distilled_water 1000')
+    .duration(128)
+    .EUt(GTValues.VA[GTValues.IV]);
+  LargeChemicalReactor('water_filtering_from_mesh')
+    .itemInputs('1x gtceu:carbon_fiber_mesh')
+    .inputFluids('minecraft:water 4000')
+    .outputFluids('gtceu:distilled_water 4000')
+    .duration(64)
+    .EUt(GTValues.VA[GTValues.IV]);
 });

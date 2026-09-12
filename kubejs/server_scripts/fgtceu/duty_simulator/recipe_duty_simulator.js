@@ -107,8 +107,22 @@ ServerEvents.recipes(event => {
       .duration(dTick)
       .EUt(EUt);
   };
-  const runMSCCalc = (model, predict, EUt, dTick) => { };
-  const runMSCFab = (model, predict, EUt, dTick) => { };
+  const runMSCCalc = (model, predict, EUt, dTick) => {
+    MSCCalc(`simulation_run_${model}`)
+      .notConsumable(Item.of('hostilenetworks:data_model', `{data_model:{id:"hostilenetworks:${model}"}}`).weakNBT())
+      .itemInputs('hostilenetworks:prediction_matrix')
+      .itemOutputs(`hostilenetworks:${predict}`)
+      .chancedOutput(Item.of('hostilenetworks:prediction', `{data_model:{id:"hostilenetworks:${model}"}}`), 3000, 500)
+      .duration(dTick)
+      .EUt(EUt);
+  };
+  const runMSCFab = (predict, circuit, output, dTick) => {
+    MSCFab(`fabricate_${predict}_circuit_${circuit}`)
+      .itemInputs(Item.of('hostilenetworks:prediction', `{data_model:{id:"hostilenetworks:${predict}"}}`).weakNBT())
+      .circuit(circuit).itemOutputs(output)
+      .duration(dTick)
+      .EUt(VHA[LuV]);
+  };
 
   AssemblyLine('duty_simulation_supercomputer')
     .itemInputs(
@@ -163,4 +177,13 @@ ServerEvents.recipes(event => {
   eikons.forEach((eikon) => {
     runExDuty(eikon.eName, eikon.eCount, eikon.maeTier, eikon.crs, eikon.byp, eikon.EUt, eikon.duration);
   });
+  const superCmp = [
+    { model: 'thermal/basalz', predict: 'overworld', EUt: VHA[ZPM], dTick: 256 },
+    { model: 'thermal/blitz', predict: 'overworld', EUt: VHA[ZPM], dTick: 256 },
+    { model: 'thermal/blizz', predict: 'overworld', EUt: VHA[ZPM], dTick: 256 },
+    { model: 'artifacts/mimic', predict: 'overworld', EUt: VHA[UV], dTick: 256 },
+    { model: 'blaze', predict: 'nether', EUt: VHA[ZPM], dTick: 256 },
+    { model: 'chicken', predict: 'overworld', EUt: VHA[LuV], dTick: 64 },
+  ];
+  const superFab = [];
 });

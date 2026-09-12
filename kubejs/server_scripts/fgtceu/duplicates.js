@@ -25,15 +25,15 @@ ServerEvents.recipes(event => {
   //  → マター (4000 * amp)mB + 灰x9 (確率)
   dupMaterials.forEach(mat => {
     const { id: ID, amp: Amp } = mat;
-    LCR(`duplicating_${ID}`)
-      .itemInputs(ID, `${4 * Amp}x ${dupIngredients.Deepslate}`)
+    LCR(`duplicating_${ID.replace('gtceu:', '')}`)
+      .itemInputs(ID.replace('gtceu:', '4x gtceu:small_'), `${4 * Amp}x ${dupIngredients.Deepslate}`)
       .inputFluids(`${dupIngredients.Matter} ${4000 * (Amp * 0.75)}`,
         `${dupIngredients.Mana} ${32000 * Amp}`)
       .itemOutputs(`${128 / Amp}x ${ID}`, `${Amp}x gtceu:dark_ash_dust`)
       .duration(200)
       .EUt(GTValues.VA[GTValues.ZPM]);
     if (cancelingReleaseMaterials(ID)) return;
-    Mixer(`releasing_${ID}_to_matter`)
+    Mixer(`releasing_${ID.replace('gtceu:', '')}_to_matter`)
       .itemInputs(`${16 / Amp}x ${ID}`)
       .inputFluids(`${dupIngredients.Mana} ${64000 * Amp}`,
         `${dupIngredients.HeliumPlasma} 125000`)
