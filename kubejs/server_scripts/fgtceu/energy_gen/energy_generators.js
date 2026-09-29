@@ -23,7 +23,7 @@ ServerEvents.recipes((event) => {
   /**
    * MEMO
    * 蒸留水1 = 蒸気160 = 過熱蒸気12
-   * また、過熱高密度冷媒1 = 過熱冷媒100, 過熱冷媒1 = 過熱蒸気960(蒸留水1)
+   * また、過熱高密度冷媒1 = 過熱冷媒20, 過熱冷媒1 = 過熱蒸気960(蒸留水1)
    */
   const FuelConds = {
     steam: {},
@@ -141,7 +141,7 @@ ServerEvents.recipes((event) => {
   });
 
   /* ---- 熱交換 ---- */
-  const excRateHDRCtoLDRC = 100;
+  const excRateHDRCtoLDRC = 20;
   const excRateLDRCtoWater = 120;
   const coolingRate = 4000;
   // Hi → Lo
@@ -150,7 +150,7 @@ ServerEvents.recipes((event) => {
       `kubejs:${coolant.ReactorCoolant} ${coolingRate * excRateHDRCtoLDRC}`)
     .outputFluids(`kubejs:${coolant.HDReactorCoolant} ${coolingRate}`,
       `kubejs:hot_${coolant.ReactorCoolant} ${coolingRate * excRateHDRCtoLDRC}`)
-    .duration(400);
+    .duration(1);
   // Lo → 蒸気
   LargeHeatExchanger('exchange_low_density_to_steam')
     .inputFluids(`kubejs:hot_${coolant.ReactorCoolant} ${coolingRate}`,

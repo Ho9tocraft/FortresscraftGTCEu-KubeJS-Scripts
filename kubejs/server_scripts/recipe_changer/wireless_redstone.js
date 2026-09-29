@@ -1,5 +1,4 @@
 // Wireless Redstone
-// こちらは逆に易化
 ServerEvents.recipes(event => {
   const transmitter = 'wirelessredstone:redstone_transmitter';
   const receiver = 'wirelessredstone:redstone_receiver';
@@ -10,6 +9,10 @@ ServerEvents.recipes(event => {
   const remote = 'wirelessredstone:remote';
   const linker = 'wirelessredstone:linker';
 
+  /**
+   * @param {string} replaceMaterial 
+   * @param {() => void} replaceCallback 
+   */
   const replaceRecipes = (replaceMaterial, replaceCallback) => {
     event.remove([{ input: replaceMaterial }, { output: replaceMaterial }]);
     replaceCallback();

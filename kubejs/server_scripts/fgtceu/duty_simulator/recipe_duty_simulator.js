@@ -1,3 +1,4 @@
+//ignored: true
 ServerEvents.recipes(event => {
   const {
     assembly_line: AssemblyLine,

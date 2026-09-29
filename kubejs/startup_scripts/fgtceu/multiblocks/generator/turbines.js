@@ -13,6 +13,7 @@ GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
     .setEUIO(GTIO.OUT)
     .setMaxIOSize(0, 0, 1, 1)
     .setProgressBar(GuiTextures.PROGRESS_BAR_GAS_COLLECTOR, FillDirection.LEFT_TO_RIGHT)
+    .setSlotOverlay(false, true, true, GuiTextures.CENTRIFUGE_OVERLAY)
     .setSound(GTSoundEntries.TURBINE);
 });
 
