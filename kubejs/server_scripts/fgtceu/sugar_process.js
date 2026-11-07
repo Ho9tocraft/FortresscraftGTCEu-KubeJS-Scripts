@@ -87,14 +87,14 @@ ServerEvents.recipes(event => {
     .inputFluids('#forge:distilled_water 1000')
     .outputFluids('kubejs:raw_beetroot_solution 2000')
     .duration(1200)
-    .EUt(GTValues.VA[GTValues.EV]);
+    .EUt(GTValues.VA[GTValues.IV]);
   // 生のてんさい溶液 1000mB → 蒸留したてんさい溶液 500mB + 3x バイオチャフ (EV)
   GT.distillation_tower('distilled_beetroot_solution')
     .inputFluids('kubejs:raw_beetroot_solution 1000')
     .itemOutputs('3x gtceu:bio_chaff')
     .outputFluids('kubejs:distilled_beetroot_solution 500')
     .duration(600)
-    .EUt(GTValues.VA[GTValues.EV]);
+    .EUt(GTValues.VA[GTValues.IV]);
   // 蒸留したてんさい溶液 100mB → 砂糖 x(2 (100％) / 2 (50％) / 2 (25％) / 2 (5％)) + 水 50mB (EV)
   GT.centrifuge('sugar_deploy_from_beetroot')
     .inputFluids('kubejs:distilled_beetroot_solution 100')
@@ -103,12 +103,12 @@ ServerEvents.recipes(event => {
     .chancedOutput('2x minecraft:sugar', 2500, 0)
     .chancedOutput('2x minecraft:sugar', 500, 0)
     .duration(120)
-    .EUt(GTValues.VA[GTValues.EV]);
+    .EUt(GTValues.VA[GTValues.IV]);
   // 64x 砂糖 + 蒸留水 1000mB → 糖蜜 1000mB (IV)
   GT.large_chemical_reactor('sugar_syrup')
     .itemInputs('64x #forge:dusts/sugar')
     .inputFluids('#forge:distilled_water 1000')
     .outputFluids('kubejs:sugar_syrup')
     .duration(1200)
-    .EUt(GTValues.VA[GTValues.IV]);
+    .EUt(GTValues.VA[GTValues.LuV]);
 });

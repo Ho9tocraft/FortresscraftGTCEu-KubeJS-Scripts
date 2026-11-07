@@ -30,7 +30,7 @@ ServerEvents.recipes((event) => {
     hp_steam: {
       superheated_steam: {
         inFluid: 'gtceu:superheated_steam 48',
-        outFluid: 'gtceu:steam 640',
+        outFluid: 'gtceu:steam 960',
         coolantValue: undefined,
         duration: 10,
         outEUt: EV
@@ -113,7 +113,7 @@ ServerEvents.recipes((event) => {
       nickel: 192,
       americium: 320,
     };
-    return !(fuel in samples) ? samples[fuel] : 0;
+    return samples[fuel] || 0;
   };
   defaultPlasmas.concat(Object.keys(FuelConds.plasma)).forEach((fuel) => {
     if (!fuel) return; // 空文字スキップ
@@ -151,12 +151,19 @@ ServerEvents.recipes((event) => {
     .outputFluids(`kubejs:${coolant.HDReactorCoolant} ${coolingRate}`,
       `kubejs:hot_${coolant.ReactorCoolant} ${coolingRate * excRateHDRCtoLDRC}`)
     .duration(1);
-  // Lo → 蒸気
+  // Lo → 過熱蒸気
   LargeHeatExchanger('exchange_low_density_to_steam')
     .inputFluids(`kubejs:hot_${coolant.ReactorCoolant} ${coolingRate}`,
       `gtceu:distilled_water ${coolingRate * excRateLDRCtoWater}`)
     .outputFluids(`kubejs:${coolant.ReactorCoolant} ${coolingRate}`,
       `gtceu:superheated_steam ${coolingRate * excRateLDRCtoWater}`)
+    .duration(1);
+  // Lo → 蒸気
+  LargeHeatExchanger('exchange_low_density_to_steam_normal')
+    .inputFluids(`kubejs:hot_${coolant.ReactorCoolant} ${coolingRate}`,
+      `gtceu:distilled_water ${coolingRate * excRateLDRCtoWater}`)
+    .outputFluids(`kubejs:${coolant.ReactorCoolant} ${coolingRate}`,
+      `gtceu:steam ${coolingRate * excRateLDRCtoWater}`)
     .duration(1);
 
   /* ---- Fuels Generating ---- */

@@ -64,6 +64,7 @@ global.FGTCEuAddedRecipeType = {
   LargeHeatExchanger: 'large_heat_exchanger',
   NeuralnetMSCCalc: 'neuralnet_mob_simulation_computer_calc',
   NeuralnetMSCFab: 'neuralnet_mob_simulation_computer_fab',
+  VoidOreMiner: 'void_ore_miner',
 };
 
 global.FGTCEuCommonStartupFunctions = {

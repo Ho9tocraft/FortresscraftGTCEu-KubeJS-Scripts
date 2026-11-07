@@ -35,4 +35,11 @@ GTCEuStartupEvents.registry('gtceu:material', event => {
     event.create('dymethyl_ether')
       .gas().color(0xFFE6FF);
   }
+  /* ---- Mekanism ---- */
+  // Low-grade Osmium (低品位オスミウム): Mekanism弱体化用鉱石。自然には生成されない
+  event.create('low_grade_osmium')
+    .ingot().color(0xAABACE).secondaryColor(0x6E6EFF).iconSet('bright')
+    .ore(3, 3).addOreByproducts(GTMaterials.MetalMixture, GTMaterials.MetalMixture, GTMaterials.RarestMetalMixture, GTMaterials.OsmiumTetroxide)
+    .washedIn(GTMaterials.SodiumPersulfate, 100)
+    .element(GTElements.Os).formula('Os?');
 });

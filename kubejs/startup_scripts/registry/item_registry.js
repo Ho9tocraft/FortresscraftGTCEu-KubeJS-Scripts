@@ -16,7 +16,7 @@ ItemEvents.toolTierRegistry(event => {
   event.add('bluefeather', tier => {
     tier.uses = 1024;
     tier.speed = 4.5;
-    tier.attackDamageBonus = 32768;
+    tier.attackDamageBonus = 512;
     tier.level = 5;
     tier.enchantmentValue = 512;
     tier.repairIngredient = '#forge:ingots/lunar_adamantium';
@@ -182,6 +182,15 @@ StartupEvents.registry('item', event => {
     .parentModel('kubejs:item/based/big_weapon_greatsword')
     .textureJson({
       layer0: 'kubejs:item/tools/bluefeather_faussar'
+    })
+    .maxStackSize(1)
+    .fireResistant(true)
+    .speed(1.0)
+    .tier('bluefeather');
+  event.create('ultimate_nothung_greatsword', 'sword')
+    .parentModel('kubejs:item/based/big_weapon_greatsword')
+    .textureJson({
+      layer0: 'kubejs:item/tools/ultimate_nothung'
     })
     .maxStackSize(1)
     .fireResistant(true)
