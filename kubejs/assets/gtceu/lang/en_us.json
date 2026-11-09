@@ -127,6 +127,7 @@
     "block.gtceu.large_heat_exchanger": "Large Heat Exchanger",
     "block.gtceu.modern_green_house": "Greenhouse",
     "block.gtceu.oversailing_fusion_reactor": "Oversailing Fusion Reactor (OFR)",
+    "block.gtceu.void_ore_miner": "Void Ore Miner",
     "__MATERIAL__GTCEU_ADDITION__.article.2b": "## Machines/Recipe Type",
     "gtceu.duty_simulator": "Extreme Duty Simulation",
     "gtceu.fission_reactor": "Fission Reactor",

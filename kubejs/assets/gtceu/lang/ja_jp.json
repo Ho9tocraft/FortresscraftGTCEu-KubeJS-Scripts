@@ -127,6 +127,7 @@
     "block.gtceu.large_heat_exchanger": "大型熱交換器",
     "block.gtceu.modern_green_house": "自動農場（グリーンハウス）",
     "block.gtceu.oversailing_fusion_reactor": "過剰燃焼型核融合炉 (OFR)",
+    "block.gtceu.void_ore_miner": "虚空採掘機",
     "__MATERIAL__GTCEU_ADDITION__.article.2b": "## Machines/Recipe Type",
     "gtceu.duty_simulator": "極討滅戦シミュレーター",
     "gtceu.fission_reactor": "加圧水型原子炉（PWR）",

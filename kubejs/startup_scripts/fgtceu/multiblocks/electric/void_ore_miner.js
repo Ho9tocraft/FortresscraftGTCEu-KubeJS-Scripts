@@ -9,11 +9,10 @@ GTCEuStartupEvents.registry('gtceu:recipe_type', event => {
   // 性質上、見本となる鉱石が必要になる(ただし、原石ではなく粉)。
   event.create(VoidOreMiner)
     .category('multiblock')
-    .setEUIO(GTIO.OUT)
+    .setEUIO(GTIO.IN)
     .setMaxIOSize(4, 9, 0, 0)
     .setProgressBar(GuiTextures.PROGRESS_BAR_MACERATE, FillDirection.LEFT_TO_RIGHT)
-    .setSound(GTSoundEntries.DRILL_TOOL)
-    .setSlotOverlay(true, true, GuiTextures.DUST_OVERLAY);
+    .setSound(GTSoundEntries.DRILL_TOOL);
 });
 
 GTCEuStartupEvents.registry('gtceu:machine', event => {
@@ -24,7 +23,7 @@ GTCEuStartupEvents.registry('gtceu:machine', event => {
   // LV時代から使用できる。
   event.create('void_ore_miner', 'multiblock')
     .rotationState(RotationState.NON_Y_AXIS)
-    .recipeType(VoidOreMiner)
+    .recipeTypes(VoidOreMiner)
     .recipeModifiers([GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.BATCH_MODE, GTRecipeModifiers.OC_NON_PERFECT_SUBTICK])
     .appearanceBlock(GTBlocks.CASING_STEEL_SOLID)
     .pattern(definition => FactoryBlockPattern.start()

@@ -35,9 +35,19 @@ const PyroOvenRecipeResource = {
 };
 
 ServerEvents.recipes(event => {
-  const GT = event.recipes.gtceu;
+  const { hp_pyrolyse_oven: HPPyrolyseOven, assembler: Assembler } = event.recipes.gtceu;
+
+  /* ---- 高出力熱分解炉のレシピ ---- */
+  Assembler('recipe_hp_pyrolyse_oven')
+    .itemInputs('4x gtceu:pyrolyse_oven', '2x kubejs:ifrit_horn', '2x kubejs:levin_orb', '2x #gtceu:circuits/hv',
+      '2x gtceu:hv_sensor', '1x kubejs:zurvanite_carapace_fragment')
+    .itemOutputs('gtceu:high_power_pyrolyse_oven')
+    .duration(2400)
+    .EUt(GTValues.VA[GTValues.HV]);
+
+  /* ---- 要素追加 ---- */
   const addHPPyrolyseOvenRecipe = (recipe_id, itemInput, circuitId, fluidInput, itemOutput, fluidOutput, wtime, wvoltage) => {
-    GT.hp_pyrolyse_oven(`hp_pyrolyse_oven_${recipe_id}`)
+    HPPyrolyseOven(`hp_pyrolyse_oven_${recipe_id}`)
       .itemInputs(itemInput)
       .circuit(circuitId)
       .inputFluids(fluidInput)

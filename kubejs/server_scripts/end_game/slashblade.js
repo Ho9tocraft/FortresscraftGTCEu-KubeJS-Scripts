@@ -1,11 +1,12 @@
-// Endgame Contents
-const endgameSlashBlades = {
-  yuzukitukumoEx: { bladeid: 'yuzukitukumo_ex', modelTex: 'model/named/exeyuzu' },
-  moonlight: { bladeid: 'moonlight_slashblade', modelTex: 'model/named/exemoon' }
-};
 
 // Define SlashBlade
 ServerEvents.highPriorityData(event => {
+  // Endgame Contents
+  const endgameSlashBlades = {
+    yuzukitukumoEx: { bladeid: 'yuzukitukumo_ex', modelTex: 'model/named/exeyuzu' },
+    moonlight: { bladeid: 'moonlight_slashblade', modelTex: 'model/named/exemoon' }
+  };
+
   const yuzukitukumoEx = SBSlashBladeDefinition.of(`fgtceu:${endgameSlashBlades.yuzukitukumoEx.bladeid}`,
     SBRenderDefinition.newInstance() // Render
       .effectColor(0xFDEFF2)
