@@ -188,6 +188,7 @@ StartupEvents.registry('item', event => {
   // --- 武器防具 ---
   // * 武器 *
   event.create('bluefeather_greatsword', 'sword')
+    .rarity('legend')
     .parentModel('kubejs:item/based/big_weapon_greatsword')
     .textureJson({
       layer0: 'kubejs:item/tools/bluefeather_faussar'
@@ -197,6 +198,7 @@ StartupEvents.registry('item', event => {
     .speed(1.0)
     .tier('bluefeather');
   event.create('ultimate_nothung_greatsword', 'sword')
+    .rarity('legend')
     .parentModel('kubejs:item/based/big_weapon_greatsword')
     .textureJson({
       layer0: 'kubejs:item/tools/ultimate_nothung'
