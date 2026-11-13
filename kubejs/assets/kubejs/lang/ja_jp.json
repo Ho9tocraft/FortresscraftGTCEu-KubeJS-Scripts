@@ -71,7 +71,12 @@
   "item.kubejs.abysslinker_pants": "アビスリンカー パンツ",
   "item.kubejs.abysslinker_boots": "アビスリンカー ブーツ",
   "item.kubejs.abysslinker_magic_circle": "アビスリンカー マジックサークル",
+  "item.kubejs.divine_hair_accessory": "魂振の髪飾り",
+  "item.kubejs.divine_shirt": "魂振の衣",
+  "item.kubejs.divine_skirt": "魂振の袴",
+  "item.kubejs.divine_boots": "魂振の足袋",
   "item.kubejs.scorched_sacred_ash": "熾聖の燃え殻",
+  "item.kubejs.silk_of_mythologic": "神話の絹糸",
   "fluid.kubejs.coolant": "原子炉冷却液",
   "fluid.kubejs.hot_coolant": "加熱された原子炉冷却液",
   "fluid.kubejs.high_density_coolant": "高密度原子炉冷却液",
@@ -86,5 +91,6 @@
   "fluid.kubejs.raw_beetroot_solution": "未処理のビートルート溶液",
   "fluid.kubejs.distilled_beetroot_solution": "処理されたビートルート溶液",
   "effect.kubejs.abyss": "アビス",
+  "effect.kubejs.rising_soul": "励起する魂",
   "__COMMENT__KUBEJS_ITEMS_END_OF_FILE__": "END OF FILE"
 }

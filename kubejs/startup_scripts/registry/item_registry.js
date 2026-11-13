@@ -11,6 +11,15 @@ ItemEvents.armorTierRegistry(event => {
     tier.toughness = 5;
     tier.knockbackResistance = 0;
   });
+  event.add('divine', tier => {
+    tier.durabilityMultiplier = 1536;
+    tier.slotProtections = [3, 6, 8, 3];
+    tier.enchantmentValue = 4;
+    tier.equipSound = 'minecraft:item.armor.equip_leather';
+    tier.repairIngredient = '#forge:ingots/ascendium';
+    tier.toughness = 3;
+    tier.knockbackResistance = 0;
+  });
 });
 ItemEvents.toolTierRegistry(event => {
   event.add('bluefeather', tier => {
@@ -199,33 +208,73 @@ StartupEvents.registry('item', event => {
   // * 防具 *
   // アビスリンカー装備
   event.create('abysslinker_magic_circle')
+    .rarity('legend')
     .textureJson({ layer0: 'kubejs:item/armor/abysslinker_magic_circle' })
     .maxStackSize(1)
     .fireResistant(true)
     .tag('curios:charm');
   event.create('abysslinker_head', 'helmet')
+    .rarity('legend')
     .textureJson({ layer0: 'kubejs:item/armor/abysslinker_armor_head' })
     .maxStackSize(1)
     .fireResistant(true)
     .tier('abysslinker');
   event.create('abysslinker_tunic', 'chestplate')
+    .rarity('legend')
     .textureJson({ layer0: 'kubejs:item/armor/abysslinker_armor_tunic' })
     .maxStackSize(1)
     .fireResistant(true)
     .tier('abysslinker');
   event.create('abysslinker_pants', 'leggings')
+    .rarity('legend')
     .textureJson({ layer0: 'kubejs:item/armor/abysslinker_armor_leggings' })
     .maxStackSize(1)
     .fireResistant(true)
     .tier('abysslinker');
   event.create('abysslinker_boots', 'boots')
+    .rarity('legend')
     .textureJson({ layer0: 'kubejs:item/armor/abysslinker_armor_boots' })
     .maxStackSize(1)
     .fireResistant(true)
     .tier('abysslinker');
+  // 魂振装備
+  event.create('divine_hair_accessory', 'helmet')
+    .rarity('epic')
+    .textureJson({ layer0: 'kubejs:item/armor/divine_hair_accessory' })
+    .maxStackSize(1)
+    .fireResistant(true)
+    .tier('divine');
+  event.create('divine_shirt', 'chestplate')
+    .rarity('epic')
+    .textureJson({ layer0: 'kubejs:item/armor/divine_shirt' })
+    .maxStackSize(1)
+    .fireResistant(true)
+    .tier('divine');
+  event.create('divine_skirt', 'leggings')
+    .rarity('epic')
+    .textureJson({ layer0: 'kubejs:item/armor/divine_skirt' })
+    .maxStackSize(1)
+    .fireResistant(true)
+    .tier('divine');
+  event.create('divine_boots', 'boots')
+    .rarity('epic')
+    .textureJson({ layer0: 'kubejs:item/armor/divine_boots' })
+    .maxStackSize(1)
+    .fireResistant(true)
+    .tier('divine');
+  // --- その他 ---
   // 熾聖の燃え殻
   event.create('scorched_sacred_ash')
+    .rarity('epic')
     .textureJson({ layer0: 'kubejs:item/burnout_waste' })
+    .fireResistant(true);
+  // 神話の絹糸
+  event.create('silk_of_mythologic')
+    .rarity('epic')
+    .textureJson({
+      layer0: 'kubejs:item/silk_of_mythologic',
+      layer1: 'kubejs:item/wire_fine_overlay'
+    })
     .fireResistant(true);
 });
 
@@ -236,7 +285,10 @@ ItemEvents.modification(event => {
   const UUIDs = Java.loadClass('java.util.UUID');
   const ArLis = Java.loadClass('java.util.ArrayList');
   const Oprte = AttrM.Operation;
-  const ISSBAtrMap = new Map([
+
+  const getAttr = (id) => { return BIReg.ATTRIBUTE.get(new ResLc(id)); }
+  // アビスリンカー装備のAttributeModifier情報
+  const ISSBAtrMapAL = new Map([
     ['head', {
       item_id: 'kubejs:abysslinker_head',
       uidInfo: {
@@ -270,14 +322,61 @@ ItemEvents.modification(event => {
       }
     }]
   ]);
-  const ISSBAttr = {
+  const ISSBAttrAL = {
     SPELL_POWER: 0.1, // 魔力+2
     MAX_MANA: 15, // MP+15
     CDREDUCT: 0.05
   };
-  ISSBAtrMap.forEach((value) => {
+
+  // 魂振装備のAttributeModifier情報
+  const ISSBAttrMapDv = new Map([
+    ['head', {
+      item_id: 'kubejs:divine_hair_accessory',
+      uidInfo: {
+        SPELL_POWER: '179b4f1a-247b-4877-99ea-ed1e126b35e9',
+        MAX_MANA: '1cf3d9f3-1094-4439-b4e7-c19b4b0982df',
+        CDREDUCT: 'd1f64d7c-4b2e-4057-add8-12544444b561',
+        MAX_HEALTH: '278f16bb-a52e-47da-af6f-8b26b1c1961c'
+      }
+    }],
+    ['chest', {
+      item_id: 'kubejs:divine_shirt',
+      uidInfo: {
+        SPELL_POWER: '206c4db1-9456-457c-a816-ad750521f282',
+        MAX_MANA: '7c8898df-a986-4065-adee-5fb5136bedfc',
+        CDREDUCT: '4e3e9786-8d9a-4bb6-b35d-3cba570fc71f',
+        MAX_HEALTH: '6f48eba8-2961-4842-9794-309de6b1572f'
+      }
+    }],
+    ['legs', {
+      item_id: 'kubejs:divine_skirt',
+      uidInfo: {
+        SPELL_POWER: '4397894a-763f-46d8-9c49-3c072cd91e47',
+        MAX_MANA: '650e7f6f-91a2-4ddb-8fa7-30f43f6c9651',
+        CDREDUCT: 'e3714a05-8676-4e3b-863c-1f16d5aeaee6',
+        MAX_HEALTH: 'aea1d323-2be7-4503-8b50-e88dafb6b8e2'
+      }
+    }],
+    ['feet', {
+      item_id: 'kubejs:divine_boots',
+      uidInfo: {
+        SPELL_POWER: '45da4733-aa0c-43f8-a5e6-cd7a190655f0',
+        MAX_MANA: '2864bce6-f2c3-46f3-8d22-af2a26feed7f',
+        CDREDUCT: '79ee4cfa-e873-4de7-a593-f80c47126ac4',
+        MAX_HEALTH: 'cfec91ea-6d68-4517-9536-320dd0c79f4d'
+      }
+    }]
+  ]);
+  const ISSBAttrDv = {
+    SPELL_POWER: 0.25,
+    MAX_MANA: 30,
+    CDREDUCT: 0.1,
+    MAX_HEALTH: 5
+  };
+
+  // 各種装備のAttributeModifierを設定
+  ISSBAtrMapAL.forEach((value) => {
     event.modify(value.item_id, item => {
-      const getAttr = (id) => { return BIReg.ATTRIBUTE.get(new ResLc(id)); }
       const addModifier = (attribute, uuid, name, amount, op) => {
         if (!attribute) return;
         const atrM = item.kjs$getMutableAttributeMap();
@@ -294,11 +393,38 @@ ItemEvents.modification(event => {
         list.add(new AttrM(uid, name, amount, op));
       };
       addModifier(getAttr('irons_spellbooks:spell_power'), value.uidInfo.SPELL_POWER,
-        'al_issb_attr_spell_power', ISSBAttr.SPELL_POWER, Oprte.MULTIPLY_TOTAL);
+        'al_issb_attr_spell_power', ISSBAttrAL.SPELL_POWER, Oprte.MULTIPLY_TOTAL);
       addModifier(getAttr('irons_spellbooks:max_mana'), value.uidInfo.MAX_MANA,
-        'al_issb_attr_max_mana', ISSBAttr.MAX_MANA, Oprte.ADDITION);
+        'al_issb_attr_max_mana', ISSBAttrAL.MAX_MANA, Oprte.ADDITION);
       addModifier(getAttr('irons_spellbooks:cooldown_reduction'), value.uidInfo.CDREDUCT,
-        'al_issb_attr_cdr', ISSBAttr.CDREDUCT, Oprte.MULTIPLY_TOTAL);
+        'al_issb_attr_cdr', ISSBAttrAL.CDREDUCT, Oprte.MULTIPLY_TOTAL);
+    });
+  });
+  ISSBAttrMapDv.forEach((value) => {
+    event.modify(value.item_id, item => {
+      const addModifier = (attribute, uuid, name, amount, op) => {
+        if (!attribute) return;
+        const atrM = item.kjs$getMutableAttributeMap();
+        let list = atrM.get(attribute);
+        if (list == null) {
+          list = new ArLis();
+          atrM.put(attribute, list);
+        }
+        const uid = UUIDs.fromString(uuid);
+        for (let i = list.size() - 1; i >= 0; i--) {
+          const tAtr = list.get(i);
+          if (tAtr.getId() && String(tAtr.getId()) === String(uid)) list.remove(i);
+        }
+        list.add(new AttrM(uid, name, amount, op));
+      };
+      addModifier(getAttr('irons_spellbooks:spell_power'), value.uidInfo.SPELL_POWER,
+        'dv_issb_attr_spell_power', ISSBAttrDv.SPELL_POWER, Oprte.MULTIPLY_TOTAL);
+      addModifier(getAttr('irons_spellbooks:max_mana'), value.uidInfo.MAX_MANA,
+        'dv_issb_attr_max_mana', ISSBAttrDv.MAX_MANA, Oprte.ADDITION);
+      addModifier(getAttr('irons_spellbooks:cooldown_reduction'), value.uidInfo.CDREDUCT,
+        'dv_issb_attr_cdr', ISSBAttrDv.CDREDUCT, Oprte.MULTIPLY_TOTAL);
+      addModifier(getAttr('minecraft:generic.max_health'), value.uidInfo.MAX_HEALTH,
+        'dv_issb_attr_max_health', ISSBAttrDv.MAX_HEALTH, Oprte.ADDITION);
     });
   });
 });

@@ -1,8 +1,5 @@
 PlayerEvents.tick(event => {
-  const ResLc = Java.loadClass('net.minecraft.resources.ResourceLocation');
-  const BIReg = Java.loadClass('net.minecraft.core.registries.BuiltInRegistries');
-  const AttrM = Java.loadClass('net.minecraft.world.entity.ai.attributes.AttributeModifier');
-  const UUIDs = Java.loadClass('java.util.UUID');
+  const { AttrM, BIReg, ResLc, UUIDs } = global.loadingClasses;
   const Oprte = AttrM.Operation;
 
   const getAttrRL = (id) => { return BIReg.ATTRIBUTE.get(new ResLc(id)); }

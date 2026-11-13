@@ -9,14 +9,21 @@ global.fullSetAttires = {
   abysslinker: {
     head: 'kubejs:abysslinker_head', chest: 'kubejs:abysslinker_tunic',
     legs: 'kubejs:abysslinker_pants', feet: 'kubejs:abysslinker_boots'
-  }
+  },
+  divine: {
+    head: 'kubejs:divine_hair_accessory', chest: 'kubejs:divine_shirt',
+    legs: 'kubejs:divine_skirt', feet: 'kubejs:divine_boots'
+  },
 };
 // Java Classのロード基準
 global.loadingClasses = {
+  AttrM: Java.loadClass('net.minecraft.world.entity.ai.attributes.AttributeModifier'),
   BIReg: Java.loadClass('net.minecraft.core.registries.BuiltInRegistries'),
   CuriosApi: Java.loadClass('top.theillusivec4.curios.api.CuriosApi'),
   EquipSlot: Java.loadClass('net.minecraft.world.entity.EquipmentSlot'),
   IMana: Java.loadClass('vazkii.botania.api.mana.ManaItemHandler'),
+  ResLc: Java.loadClass('net.minecraft.resources.ResourceLocation'),
+  UUIDs: Java.loadClass('java.util.UUID'),
 };
 
 // --- 関数 ---

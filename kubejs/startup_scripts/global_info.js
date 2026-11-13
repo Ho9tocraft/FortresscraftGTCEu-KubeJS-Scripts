@@ -20,6 +20,12 @@ global.loadingStartupClasses = {
     // Interface
     $IMultiController: Java.loadClass('com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiController'),
   },
+  ISSB: {
+    $MagicData: Java.loadClass('io.redspace.ironsspellbooks.api.magic.MagicData'),
+    $Attributes: Java.loadClass('io.redspace.ironsspellbooks.api.registry.AttributeRegistry'),
+    $SyncManaPacket: Java.loadClass('io.redspace.ironsspellbooks.network.SyncManaPacket'),
+    $PacketDistributor: Java.loadClass('io.redspace.ironsspellbooks.setup.PacketDistributor'),
+  },
   MC: {
     $ResourceLocation: Java.loadClass('net.minecraft.resources.ResourceLocation'),
   },

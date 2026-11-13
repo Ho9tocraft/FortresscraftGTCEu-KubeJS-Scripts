@@ -16,7 +16,6 @@ ServerEvents.recipes(event => {
       .killCount(1600)
       .proudSoul(250000)
       .refineCount(10)
-      .addEnchantment(SBEnchantmentDefinition.of('enderio:soulbound', 1))
       .build()
     ),
     A: 'kubejs:blue_feather',

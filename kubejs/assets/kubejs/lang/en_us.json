@@ -71,7 +71,12 @@
   "item.kubejs.abysslinker_pants": "Abyss Linker Pants",
   "item.kubejs.abysslinker_boots": "Abyss Linker Boots",
   "item.kubejs.abysslinker_magic_circle": "Abyss Linker Magic Circle",
+  "item.kubejs.divine_hair_accessory": "Divine Hair Accessory",
+  "item.kubejs.divine_shirt": "Divine Shirt",
+  "item.kubejs.divine_skirt": "Divine Skirt",
+  "item.kubejs.divine_boots": "Divine Socks",
   "item.kubejs.scorched_sacred_ash": "Scorched Sacred Ashes",
+  "item.kubejs.silk_of_mythologic": "Silk of Mythologic",
   "fluid.kubejs.coolant": "Reactor Coolant",
   "fluid.kubejs.hot_coolant": "Heated Reactor Coolant",
   "fluid.kubejs.high_density_coolant": "High Density Reactor Coolant",
@@ -86,5 +91,6 @@
   "fluid.kubejs.raw_beetroot_solution": "Raw Beetroot Solution",
   "fluid.kubejs.distilled_beetroot_solution": "Distilled Beetroot Solution",
   "effect.kubejs.abyss": "Abyss",
+  "effect.kubejs.rising_soul": "Rising Soul",
   "__COMMENT__KUBEJS_ITEMS_END_OF_FILE__": "END OF FILE"
 }
