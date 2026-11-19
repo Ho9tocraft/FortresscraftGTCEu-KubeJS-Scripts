@@ -1,13 +1,67 @@
 // Industrial Foregoing
 ServerEvents.recipes(event => {
+  // Remove
+  // - Infinity Charger (Remove)
+  // - Resourceful Furnace (Remove)
+  // - Mechanical Dirt (Remove)
+  // - Block Placer, Block Breaker (Remove)
+  // - Fluid Collector, Fluid Placer (Remove)
+  // - Dye Mixer (Remove)
+  // - Spores Recreator (Remove)
+  // - IF Ore Washing System (Remove)
+  // - Transport & Storage Module (Remove)
+  const removeContents = [
+    'industrialforegoing:infinity_charger', 'industrialforegoing:resourceful_furnace',
+    'industrialforegoing:mechanical_dirt',
+    'industrialforegoing:dye_mixer', 'industrialforegoing:spores_recreator',
+    ['industrialforegoing:block_placer', 'industrialforegoing:block_breaker'],
+    ['industrialforegoing:fluid_collector', 'industrialforegoing:fluid_placer'],
+    [
+      'industrialforegoing:washing_factory', 'industrialforegoing:fermentation_station',
+      'industrialforegoing:fluid_sieving_machine'
+    ],
+    [
+      'industrialforegoing:conveyor', 'industrialforegoing:pity_black_hole_unit',
+      'industrialforegoing:common_black_hole_unit', 'industrialforegoing:simple_black_hole_unit',
+      'industrialforegoing:advanced_black_hole_unit', 'industrialforegoing:supreme_black_hole_unit',
+      'industrialforegoing:pity_black_hole_tank', 'industrialforegoing:common_black_hole_tank',
+      'industrialforegoing:simple_black_hole_tank', 'industrialforegoing:advanced_black_hole_tank',
+      'industrialforegoing:supreme_black_hole_tank', 'industrialforegoing:black_hole_controller',
+      'industrialforegoing:conveyor_extraction_upgrade', 'industrialforegoing:conveyor_insertion_upgrade',
+      'industrialforegoing:conveyor_detection_upgrade', 'industrialforegoing:conveyor_bouncing_upgrade',
+      'industrialforegoing:conveyor_dropping_upgrade', 'industrialforegoing:conveyor_blinking_upgrade',
+      'industrialforegoing:conveyor_splitting_upgrade', 'industrialforegoing:item_transporter_type',
+      'industrialforegoing:fluid_transporter_type', 'industrialforegoing:world_transporter_type'
+    ],
+    [
+      'industrialforegoing:infinity_backpack', 'industrialforegoing:infinity_drill',
+      'industrialforegoing:infinity_hammer', 'industrialforegoing:infinity_launcher',
+      'industrialforegoing:infinity_nuke', 'industrialforegoing:infinity_saw',
+      'industrialforegoing:infinity_trident'
+    ]
+  ];
+  removeContents.forEach((value) => {
+    if (typeof value == 'string') event.remove({ output: value });
+    else if (typeof value == 'object' && Array.isArray(value)) {
+      value.forEach((val2) => {
+        event.remove({ output: val2 });
+      });
+    }
+  });
+
   const GT = event.recipes.gtceu;
+  const { assembler: Assembler } = event.recipes.gtceu;
   const IFMachineFrame = {
     PITY: 'industrialforegoing:machine_frame_pity',
     SIMPLE: 'industrialforegoing:machine_frame_simple',
     ADVANCED: 'industrialforegoing:machine_frame_advanced',
     SUPREME: 'industrialforegoing:machine_frame_supreme'
   };
-  const plasticType = ['industrialforegoing:plastic', '#forge:plates/polyethylene', '#forge:plates/polytetrafluoroethylene'];
+  const plasticType = [
+    'industrialforegoing:plastic',
+    '#forge:plates/polyethylene',
+    '#forge:plates/polytetrafluoroethylene'
+  ];
   // Core
   // - Pity Machine Frame (Replace)
   event.remove({ output: IFMachineFrame.PITY });
@@ -22,8 +76,9 @@ ServerEvents.recipes(event => {
   });
   // - Simple Machine Frame (Replace)
   event.remove({ output: IFMachineFrame.SIMPLE });
-  GT.assembler('replace_industrial_foregoing_machine_frame_simple')
-    .itemInputs('2x #forge:plates/polyethylene', IFMachineFrame.PITY, '2x #forge:ingots/nether_brick', '2x #forge:ingots/iron',
+  Assembler('replace_industrial_foregoing_machine_frame_simple')
+    .itemInputs('2x #forge:plates/polyethylene', IFMachineFrame.PITY,
+      '2x #forge:ingots/nether_brick', '2x #forge:ingots/iron',
       'gtceu:lv_machine_hull')
     .inputFluids('#forge:latex 250')
     .itemOutputs(IFMachineFrame.SIMPLE)
@@ -31,8 +86,9 @@ ServerEvents.recipes(event => {
     .EUt(GTValues.VA[GTValues.LV]);
   // - Advanced Machine Frame (Replace)
   event.remove({ output: IFMachineFrame.ADVANCED });
-  GT.assembler('replace_industrial_foregoing_machine_frame_advanced')
-    .itemInputs(IFMachineFrame.SIMPLE, 'gtceu:mv_machine_hull', '2x #forge:plates/polyethylene', '2x minecraft:netherite_scrap',
+  Assembler('replace_industrial_foregoing_machine_frame_advanced')
+    .itemInputs(IFMachineFrame.SIMPLE, 'gtceu:mv_machine_hull',
+      '2x #forge:plates/polyethylene', '2x minecraft:netherite_scrap',
       '2x #forge:ingots/gold', '2x #forge:ingots/aluminium')
     .inputFluids('#forge:pink_slime 500')
     .itemOutputs(IFMachineFrame.ADVANCED)
@@ -40,9 +96,11 @@ ServerEvents.recipes(event => {
     .EUt(GTValues.VA[GTValues.MV]);
   // - Supreme Machine Frame (Replace)
   event.remove({ output: IFMachineFrame.SUPREME });
-  GT.assembler('replace_industrial_foregoing_machine_frame_supreme')
-    .itemInputs(IFMachineFrame.ADVANCED, 'gtceu:hv_machine_hull', '2x #forge:plates/polytetrafluoroethylene', '2x #forge:gears/stainless_steel',
-      '2x #forge:exquisite_gems/diamond', '2x #forge:ingots/stainless_steel', '2x #forge:ingots/netherite')
+  Assembler('replace_industrial_foregoing_machine_frame_supreme')
+    .itemInputs(IFMachineFrame.ADVANCED, 'gtceu:hv_machine_hull',
+      '2x #forge:plates/polytetrafluoroethylene', '2x #forge:gears/stainless_steel',
+      '2x #forge:exquisite_gems/diamond', '2x #forge:ingots/stainless_steel',
+      '2x #forge:ingots/netherite')
     .inputFluids('industrialforegoing:ether_gas 100')
     .itemOutputs(IFMachineFrame.SUPREME)
     .duration(800)
@@ -213,8 +271,9 @@ ServerEvents.recipes(event => {
   });
   // - Mob Dupricator (Replace)
   event.remove({ output: 'industrialforegoing:mob_duplicator' });
-  GT.assembler('replace_industrial_foregoing_mob_dupricator')
-    .itemInputs('2x #forge:plates/polyethylene', 'minecraft:nether_wart', 'minecraft:magma_cream',
+  Assembler('replace_industrial_foregoing_mob_dupricator')
+    .itemInputs('2x #forge:plates/polyethylene', 'minecraft:nether_wart',
+      'minecraft:magma_cream',
       '#forge:gems/emerald', '#forge:dusts/red_alloy')
     .inputFluids('#forge:latex 4000')
     .itemOutputs('industrialforegoing:mob_duplicator')
@@ -295,7 +354,7 @@ ServerEvents.recipes(event => {
     'EFE'
   ], {
     A: '#forge:plates/polyethylene',
-    B: 'minecraft:nether_brick',
+    B: 'minecraft:nether_bricks',
     C: 'minecraft:book',
     D: IFMachineFrame.ADVANCED,
     E: '#forge:gems/diamond',
@@ -347,7 +406,9 @@ ServerEvents.recipes(event => {
     });
   });
   // - Material StoneWork Factory (Replace & Alternative)
-  event.remove({ output: 'industrialforegoing:material_stonework_factory' });
+  event.remove({
+    output: 'industrialforegoing:material_stonework_factory'
+  });
   plasticType.forEach((value) => {
     event.shaped('industrialforegoing:material_stonework_factory', [
       'ABA',
@@ -406,9 +467,11 @@ ServerEvents.recipes(event => {
   });
   // - Laser Drill (Replace)
   event.remove({ output: 'industrialforegoing:laser_drill' });
-  GT.assembler('replace_industrial_foregoing_laser_drill')
-    .itemInputs('2x #forge:plates/polytetrafluoroethylene', '#forge:gears/titanium', '2x gtceu:ev_electric_piston', IFMachineFrame.SIMPLE,
-      '#forge:gears/diamond', '2x #forge:gears/gold', '#forge:dusts/red_alloy')
+  Assembler('replace_industrial_foregoing_laser_drill')
+    .itemInputs('2x #forge:plates/polytetrafluoroethylene',
+      '#forge:gears/titanium', '2x gtceu:ev_electric_piston',
+      IFMachineFrame.SIMPLE, '#forge:gears/diamond',
+      '2x #forge:gears/gold', '#forge:dusts/red_alloy')
     .circuit(14)
     .itemOutputs('industrialforegoing:laser_drill')
     .duration(800)
@@ -457,75 +520,5 @@ ServerEvents.recipes(event => {
         B: 'minecraft:ghast_tear'
       });
     }
-  });
-  // Remove
-  // - Pitiful Generator (Remove)
-  // - Hydroponic Bed (Remove)
-  // - Wither Builder (Remove)
-  // - Mycelial Reactor & Mycelical Generators (Remove)
-  // - Infinity Charger (Remove)
-  // - Resourceful Furnace (Remove)
-  // - Mechanical Dirt (Remove)
-  // - Block Placer, Block Breaker (Remove)
-  // - Fluid Collector, Fluid Placer (Remove)
-  // - Dye Mixer (Remove)
-  // - Spores Recreator (Remove)
-  // - IF Ore Washing System (Remove)
-  // - Transport & Storage Module (Remove)
-  const removeContents = [
-    'industrialforegoing:pitiful_generator', 'industrialforegoing:hydroponic_bed', 'industrialforegoing:wither_builder',
-    [
-      'industrialforegoing:mycelial_reactor', 'industrialforegoing:mycelial_furnace', 'industrialforegoing:mycelial_slimey',
-      'industrialforegoing:mycelial_culinary', 'industrialforegoing:mycelial_potion', 'industrialforegoing:mycelial_disenchantment',
-      'industrialforegoing:mycelial_ender', 'industrialforegoing:mycelial_explosive', 'industrialforegoing:mycelial_frosty',
-      'industrialforegoing:mycelial_halitosis', 'industrialforegoing:mycelial_magma', 'industrialforegoing:mycelial_pink',
-      'industrialforegoing:mycelial_netherstar', 'industrialforegoing:mycelial_death', 'industrialforegoing:mycelial_rocket',
-      'industrialforegoing:mycelial_crimed', 'industrialforegoing:mycelial_meatallurgic'
-    ], 'industrialforegoing:infinity_charger', 'industrialforegoing:resourceful_furnace', 'industrialforegoing:mechanical_dirt',
-    ['industrialforegoing:block_placer', 'industrialforegoing:block_breaker'],
-    ['industrialforegoing:fluid_collector', 'industrialforegoing:fluid_placer'],
-    'industrialforegoing:dye_mixer', 'industrialforegoing:spores_recreator',
-    ['industrialforegoing:washing_factory', 'industrialforegoing:fermentation_station', 'industrialforegoing:fluid_sieving_machine'],
-    [
-      'industrialforegoing:conveyor', 'industrialforegoing:pity_black_hole_unit', 'industrialforegoing:common_black_hole_unit',
-      'industrialforegoing:simple_black_hole_unit', 'industrialforegoing:advanced_black_hole_unit',
-      'industrialforegoing:supreme_black_hole_unit', 'industrialforegoing:pity_black_hole_tank', 'industrialforegoing:common_black_hole_tank',
-      'industrialforegoing:simple_black_hole_tank', 'industrialforegoing:advanced_black_hole_tank',
-      'industrialforegoing:supreme_black_hole_tank', 'industrialforegoing:black_hole_controller',
-      'industrialforegoing:conveyor_extraction_upgrade', 'industrialforegoing:conveyor_insertion_upgrade',
-      'industrialforegoing:conveyor_detection_upgrade', 'industrialforegoing:conveyor_bouncing_upgrade',
-      'industrialforegoing:conveyor_dropping_upgrade', 'industrialforegoing:conveyor_blinking_upgrade',
-      'industrialforegoing:conveyor_splitting_upgrade', 'industrialforegoing:item_transporter_type',
-      'industrialforegoing:fluid_transporter_type', 'industrialforegoing:world_transporter_type'
-    ], [
-      'industrialforegoing:infinity_backpack', 'industrialforegoing:infinity_drill', 'industrialforegoing:infinity_hammer',
-      'industrialforegoing:infinity_launcher', 'industrialforegoing:infinity_nuke', 'industrialforegoing:infinity_saw',
-      'industrialforegoing:infinity_trident'
-    ]
-  ];
-  const removeRecipeTypes = {
-    MYCELIAL: [
-      'industrialforegoing:mycelial_reactor', 'industrialforegoing:mycelial_furnace', 'industrialforegoing:mycelial_slimey',
-      'industrialforegoing:mycelial_culinary', 'industrialforegoing:mycelial_potion', 'industrialforegoing:mycelial_disenchantment',
-      'industrialforegoing:mycelial_ender', 'industrialforegoing:mycelial_explosive', 'industrialforegoing:mycelial_frosty',
-      'industrialforegoing:mycelial_halitosis', 'industrialforegoing:mycelial_magma', 'industrialforegoing:mycelial_pink',
-      'industrialforegoing:mycelial_netherstar', 'industrialforegoing:mycelial_death', 'industrialforegoing:mycelial_rocket',
-      'industrialforegoing:mycelial_crimed', 'industrialforegoing:mycelial_meatallurgic'
-    ],
-    ORE_WASHER: ['industrialforegoing:ore_washer', 'industrialforegoing:fermenter', 'industrialforegoing:ore_sieve']
-  };
-  removeContents.forEach((value) => {
-    if (typeof value == 'string') event.remove({ output: value });
-    else if (typeof value == 'object' && Array.isArray(value)) {
-      value.forEach((val2) => {
-        event.remove({ output: val2 });
-      });
-    }
-  });
-  removeRecipeTypes.MYCELIAL.forEach((value) => {
-    event.remove({ type: value });
-  });
-  removeRecipeTypes.ORE_WASHER.forEach((value) => {
-    event.remove({ type: value });
   });
 });

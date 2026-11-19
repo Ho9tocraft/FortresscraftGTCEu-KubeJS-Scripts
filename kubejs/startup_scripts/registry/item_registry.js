@@ -376,8 +376,12 @@ ItemEvents.modification(event => {
     MAX_HEALTH: 5
   };
 
+  const ISSBUnbreakableShift = []; // 不可壊を設定するアイテムのリスト
+
   // 各種装備のAttributeModifierを設定
   ISSBAtrMapAL.forEach((value) => {
+    ISSBUnbreakableShift.push(value.item_id);
+
     event.modify(value.item_id, item => {
       const addModifier = (attribute, uuid, name, amount, op) => {
         if (!attribute) return;
@@ -403,6 +407,8 @@ ItemEvents.modification(event => {
     });
   });
   ISSBAttrMapDv.forEach((value) => {
+    ISSBUnbreakableShift.push(value.item_id);
+
     event.modify(value.item_id, item => {
       const addModifier = (attribute, uuid, name, amount, op) => {
         if (!attribute) return;
@@ -427,6 +433,12 @@ ItemEvents.modification(event => {
         'dv_issb_attr_cdr', ISSBAttrDv.CDREDUCT, Oprte.MULTIPLY_TOTAL);
       addModifier(getAttr('minecraft:generic.max_health'), value.uidInfo.MAX_HEALTH,
         'dv_issb_attr_max_health', ISSBAttrDv.MAX_HEALTH, Oprte.ADDITION);
+    });
+  });
+
+  ISSBUnbreakableShift.forEach(item_id => {
+    event.modify(item_id, item => {
+      item.maxDamage = 0;
     });
   });
 });
